@@ -16,6 +16,8 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "knex": "^3.0.1",
+    "pg": "^8.11.3",
     "ts-node": "^10.9.1"
   }
 }
