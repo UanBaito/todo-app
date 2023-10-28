@@ -1,8 +1,26 @@
 import request from "supertest";
 
-test("get home", async () => {
-  let hc = request.agent("http://localhost:3000");
-  await hc.get("/api/todos").expect(200);
-  await hc.post("/api/todos").send({ "name": "elpepe" }).expect(200);
-  await hc.delete("/api/todos/12").expect(200);
+let hc = request.agent("http://localhost:3000");
+test("list_todos", async () => {
+  let response = await hc.get("/api/todos").expect(200);
+  if (response.error) {
+    console.log(response.body);
+  }
+});
+
+test("create_todo", async () => {
+  let response = await hc.post("/api/todos").send({ "name": "elpepe" }).expect(
+    200,
+  );
+  if (response.error) {
+    console.log(response.body);
+  }
+});
+
+test("delete_todo", async () => {
+  let response = await hc.delete("/api/todos/12");
+  if (response.error) {
+    console.log(response.body);
+  }
+  expect(response.statusCode).toBe(200);
 });
