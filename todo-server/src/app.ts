@@ -1,18 +1,21 @@
-import express from "express"
-import todosRouter from "./todos/routes.js"
-import cors from "cors"
+import express from "express";
+import todosRouter from "./todos/routes.ts";
+import cors from "cors";
+import bodyParser from "body-parser";
 
-const app = express()
-const port = 3000
+export const app = express();
+const port = 3000;
 
-app.use(cors())
-app.use("/api/todos", todosRouter)
+app.use(cors());
+app.use(bodyParser.json());
+
+app.use("/api/todos", todosRouter);
 app.get("/", (_req, res) => {
-  res.send("Hello world")
-})
+  res.send("Hello world");
+});
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`)
-})
-
-
+if (process.env.NODE_ENV !== "test") {
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+  });
+}

@@ -1,5 +1,6 @@
 {
-    "events": {
-        "start": "reset"
-    }
+  "ignore": ["*.test.ts", "request.test.ts"],
+  "events": {
+    "start": "reset"
+  }
 }
