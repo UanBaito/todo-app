@@ -1,5 +1,5 @@
 import express from "express";
-import { create_todo, list_todo } from "./model.ts";
+import { create_todo, delete_todo, list_todo } from "./model.ts";
 import { TodoForCreate } from "../utils/interfaces.ts";
 
 const todosRouter = express.Router();
@@ -22,5 +22,16 @@ todosRouter.post("/", async (req, res) => {
     res.status(500).send("INTERNAL_SERVICE_ERROR");
   }
 });
+
+todosRouter.delete("/:id", async (req, res) => {
+  try {
+    const params = req.params
+    const id = parseInt(params.id)
+    const todo = await delete_todo(id)
+    res.send(todo)
+ } catch (err) {
+    res.status(500).send("INTERNAL_SERVICE_ERROR");
+  }
+})
 
 export default todosRouter;
