@@ -1,11 +1,13 @@
 import express from "express";
-import { LoginFail } from "../utils/error";
+import { LoginFail } from "../utils/error.ts";
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
 
-const loginRouter = express.Router();
+export const loginRouter = express.Router();
 
 loginRouter.post("/", (req, res, next) => {
+  console.log(`->> HANDLER - login`)
+
   try {
     let { username, password } = req.body;
     if (username !== "onebyte" || password !== "123") {

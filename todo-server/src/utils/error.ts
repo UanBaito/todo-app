@@ -20,4 +20,8 @@ export class TodoDeleteFailIdNotFound extends CustomError {
 }
 
 export class LoginFail extends CustomError {
+  constructor(body: any) {
+    super(body)
+    this.clientError = "LOGIN FAIL"
+  }
 }

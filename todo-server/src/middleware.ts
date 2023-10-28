@@ -1,17 +1,22 @@
 import { ErrorRequestHandler, RequestHandler } from "express";
-import { TodoDeleteFailIdNotFound } from "./utils/error.ts";
+import { LoginFail, TodoDeleteFailIdNotFound } from "./utils/error.ts";
 
-export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
+export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
   
   console.log(
-    `->> ERROR-HANDLER - ${err.constructor.name} - ${JSON.stringify(err.body)}\n`,
-    `->> CLIENT-ERROR - ${err.clientError}`,
+    `->> ERROR-HANDLER - ${err.constructor.name} ${err.body ? "- " + JSON.stringify(err.body) : ""}\n`,
+    `->> CLIENT-ERROR - ${err.clientError}\n`,
+    `->> REQUEST-BODY - ${JSON.stringify(req.body)}`,
   );
 
   if (err instanceof TodoDeleteFailIdNotFound) {
     res.status(400).send(
-      { "error": err.body.clientError },
+      { "error": err.clientError },
     );
+  } else if(err instanceof LoginFail) {
+    res.status(403).send({
+      "error": err.clientError
+    })
   }
 };
 

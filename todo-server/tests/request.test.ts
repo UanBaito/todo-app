@@ -24,3 +24,29 @@ test("delete_todo", async () => {
   }
   expect(response.statusCode).toBe(200);
 });
+
+
+
+test("empty-credentials", async () => {
+  let response = await hc.post("/api/login");
+  if (response.error) {
+    console.log(response.body);
+  }
+  expect(response.statusCode).toBe(403);
+});
+
+test("wrong-credentials", async () => {
+  let response = await hc.post("/api/login").send({"username": "elpepe", "password": "123"});
+  if (response.error) {
+    console.log(response.body);
+  }
+  expect(response.statusCode).toBe(403);
+});
+
+test("login", async () => {
+  let response = await hc.post("/api/login").send({"username": "onebyte", "password": "123"});
+  if (response.error) {
+    console.log(response.body);
+  }
+  expect(response.statusCode).toBe(200);
+});

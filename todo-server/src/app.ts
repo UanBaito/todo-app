@@ -4,6 +4,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser"
 import { errorHandler, logger } from "./middleware.ts";
+import { loginRouter } from "./auth/routes.ts";
 
 export const app = express();
 const port = 3000;
@@ -21,8 +22,9 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(logger)
 
-
+app.use("/api/login", loginRouter)
 app.use("/api/todos", todosRouter);
+
 
 app.get("/", (_req, res) => {
   res.send("Hello world");
