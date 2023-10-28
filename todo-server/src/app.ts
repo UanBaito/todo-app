@@ -22,9 +22,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(logger)
 
-app.use("/api/login", loginRouter)
-app.use("/api/todos", todosRouter);
 
+const apiRouter = express.Router()
+apiRouter.use("/login", loginRouter)
+apiRouter.use("/todos", todosRouter);
+app.use("/api", apiRouter)
 
 app.get("/", (_req, res) => {
   res.send("Hello world");
