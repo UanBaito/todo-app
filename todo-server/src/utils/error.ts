@@ -25,3 +25,10 @@ export class LoginFail extends CustomError {
     this.clientError = "LOGIN FAIL"
   }
 }
+
+export class AuthFailNoToken extends CustomError {
+  constructor(body: any) {
+    super(body)
+    this.clientError = "NO_AUTH"
+  }
+}
