@@ -9,7 +9,7 @@ todosRouter.get("/", async (_req, res) => {
     const todos_list = await list_todo();
     res.send(todos_list);
   } catch (err) {
-    res.status(500).send("INTERNAL_SERVICE_ERROR");
+    res.status(500).send(err);
   }
 });
 
@@ -19,7 +19,7 @@ todosRouter.post("/", async (req, res) => {
     const todo = await create_todo(todo_for_create.name);
     res.send(todo);
   } catch (err) {
-    res.status(500).send("INTERNAL_SERVICE_ERROR");
+    res.status(500).send(err);
   }
 });
 
@@ -30,7 +30,7 @@ todosRouter.delete("/:id", async (req, res) => {
     const todo = await delete_todo(id)
     res.send(todo)
  } catch (err) {
-    res.status(500).send("INTERNAL_SERVICE_ERROR");
+    res.status(500).send(err);
   }
 })
 

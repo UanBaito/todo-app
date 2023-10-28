@@ -1,5 +1,6 @@
 import { Todo } from "knex/types/tables";
 import db from "../db/db.ts";
+import { TodoDeleteFailIdNotFound } from "../utils/error.ts";
 
 export async function create_todo(name: string) {
   console.log(`->> HANDLER - create_todo`)
@@ -17,9 +18,9 @@ export async function delete_todo(id: number) {
   console.log(`->> HANDLER - delete_todo`)
   const todo = await db<Todo>("todos").where("id", id).del().returning("*")
   //TODO: throw error if id was not found
-  // if (todo.length === 0) {
-  //   return 
-  // }
+   if (todo.length === 0) {
+     throw new TodoDeleteFailIdNotFound()
+   }
   return todo[0]
 }
 
