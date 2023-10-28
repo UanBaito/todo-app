@@ -1,5 +1,5 @@
 import express from "express";
-import { list_todo } from "./model.ts";
+import { list_todo } from "./model.js";
 
 const todosRouter = express.Router();
 
