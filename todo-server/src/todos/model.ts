@@ -17,7 +17,7 @@ export async function delete_todo(id: number) {
   //TODO: throw error if id was not found
    if (todo.length === 0) {
      throw new TodoDeleteFailIdNotFound({
-      id
+      id: id
     })
    }
   return todo[0]
