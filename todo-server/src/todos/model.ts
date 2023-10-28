@@ -9,7 +9,7 @@ export async function create_todo(name: string) {
 
 export async function list_todo() {
   console.log(`->> HANDLER - list_todo`)
-  const todos = await db.select().from("todos")
+  const todos = await db<Todo>("todos").select()
   return todos
 }
 
