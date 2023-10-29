@@ -47,10 +47,40 @@ test("register", async () => {
     "pwd": "one",
   });
   expect(registerResponse.statusCode).toBe(201);
-  console.log(registerResponse.body);
   let loginResponse = await hc.post("/api/auth/login").send({"name": "12345", "pwd": "one"})
   expect(loginResponse.statusCode).toBe(200)
   let id = registerResponse.body[0].id
   let deleteResponse = await hc.delete(`/api/users/${id}`)
   expect(deleteResponse.statusCode).toBe(200)
 });
+
+
+test("register", async () => {
+  let registerResponse = await hc.post("/api/auth/register").send({
+    "name": "12345",
+    "pwd": "one",
+  });
+  expect(registerResponse.statusCode).toBe(201);
+  let loginResponse = await hc.post("/api/auth/login").send({"name": "12345", "pwd": "one"})
+  expect(loginResponse.statusCode).toBe(200)
+  let id = registerResponse.body[0].id
+  let deleteResponse = await hc.delete(`/api/users/${id}`)
+  expect(deleteResponse.statusCode).toBe(200)
+});
+
+test("cross_user_delete", async () => {
+  let register1Response = await hc.post("/api/auth/register").send({"name": "user1","pwd": "123"})
+  let register2Response = await hc.post("/api/auth/register").send({"name": "user2","pwd": "123"})
+  expect(register1Response.statusCode).toBe(201)
+  expect(register2Response.statusCode).toBe(201)
+  let user1Login = await hc.post("/api/auth/login").send({"name": "user1", "pwd": "123"})
+  expect(user1Login.statusCode).toBe(200)
+  let deleteUser2 = await hc.delete(`/api/users/${register2Response.body[0].id}`)
+  expect(deleteUser2.statusCode).toBe(401)
+  let deleteUser1 = await hc.delete(`/api/users/${register1Response.body[0].id}`)
+  expect(deleteUser1.statusCode).toBe(200)
+  let user2Login = await hc.post("/api/auth/login").send({"name": "user2", "pwd": "123"})
+  expect(user2Login.statusCode).toBe(200)
+  let deleteUser22= await hc.delete(`/api/users/${register2Response.body[0].id}`)
+  expect(deleteUser22.statusCode).toBe(200)
+})
