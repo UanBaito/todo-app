@@ -20,7 +20,7 @@ loginRouter.post("/login", (req, res, next) => {
     const token = jwt.sign({
       exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
       username,
-    }, "elpepe");
+    }, process.env.JWT_SECRET!);
 
     const serializedToken = serialize("authToken", token, {
       httpOnly: true,
@@ -39,6 +39,7 @@ loginRouter.post("/login", (req, res, next) => {
 });
 
 loginRouter.post("/logout", (req, res, next) => {
+  console.log(`->> HANDLER - logout`);
   let { authToken } = req.cookies;
   try {
 
@@ -46,7 +47,7 @@ loginRouter.post("/logout", (req, res, next) => {
       res.send("USER WAS NOT LOGGED IN");
     }
 
-    jwt.verify(authToken, "elpepe");
+    jwt.verify(authToken, process.env.JWT_SECRET!);
 
     const serializedToken = serialize("authToken", "", {
       httpOnly: true,

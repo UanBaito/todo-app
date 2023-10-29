@@ -10,7 +10,7 @@ console.log(`->> MIDDLEWARE - auth`,
    if(!authToken){
       throw new AuthFailNoToken(null)
     } 
-    const user = jwt.verify(authToken,"elpepe")
+    const user = jwt.verify(authToken,process.env.JWT_SECRET!)
     res.locals.user = user
     next()
   } catch (err) {
