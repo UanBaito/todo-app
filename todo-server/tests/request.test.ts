@@ -3,7 +3,7 @@ import request from "supertest";
 let hc = request.agent("http://localhost:3000");
 
 test("login", async () => {
-  let response = await hc.post("/api/login").send({"username": "onebyte", "password": "123"});
+  let response = await hc.post("/api/auth/login").send({"username": "onebyte", "password": "123"});
   expect(response.statusCode).toBe(200);
 });
 
@@ -22,12 +22,12 @@ test("create_and_delete_todo", async () => {
 });
 
 test("empty-credentials", async () => {
-  let response = await hc.post("/api/login");
+  let response = await hc.post("/api/auth/login");
   expect(response.statusCode).toBe(401);
 });
 
 test("wrong-credentials", async () => {
-  let response = await hc.post("/api/login").send({"username": "elpepe", "password": "123"});
+  let response = await hc.post("/api/auth/login").send({"username": "elpepe", "password": "123"});
   expect(response.statusCode).toBe(401);
 });
 

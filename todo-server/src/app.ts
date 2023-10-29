@@ -25,7 +25,7 @@ app.use(logger)
 
 
 const apiRouter = express.Router()
-apiRouter.use("/login", loginRouter)
+apiRouter.use("/auth", loginRouter)
 apiRouter.use(checkToken)
 apiRouter.use("/todos", todosRouter);
 app.use("/api", apiRouter)

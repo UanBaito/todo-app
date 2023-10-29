@@ -5,9 +5,8 @@ import { serialize } from "cookie";
 
 export const loginRouter = express.Router();
 
-loginRouter.post("/", (req, res, next) => {
+loginRouter.post("/login", (req, res, next) => {
   console.log(`->> HANDLER - login`)
-
   try {
     let { username, password } = req.body;
     if (username !== "onebyte" || password !== "123") {
