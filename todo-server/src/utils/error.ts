@@ -1,4 +1,3 @@
-//TODO: move client error to the body of these classes
 type ClientError = "INVALID PARAMS" | "NO_AUTH" | "LOGIN FAIL" | "SERVICE ERROR"
 
 class CustomError extends Error {

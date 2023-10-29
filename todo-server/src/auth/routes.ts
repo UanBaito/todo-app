@@ -22,6 +22,14 @@ loginRouter.post("/login", async (req, res, next) => {
     }
 
     const result = await userModel.getUserPwdHash(user.id);
+
+    if(!result){
+      //FIXME: come up with better error describer, since in case the user exists,
+      //result should never be undefined. There is a not null constraint on the
+      //db for this column (pwd_hash).
+      throw new LoginFail(null)
+    }
+
     const match = await bcrypt.compare(password, result.pwd_hash);
     if (!match) {
       throw new LoginFail(null)

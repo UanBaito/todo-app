@@ -1,4 +1,4 @@
-import { Todo } from "knex/types/tables";
+import { Todo } from "../utils/interfaces.ts";
 import db from "../db/db.ts";
 import { TodoDeleteFailIdNotFound } from "../utils/error.ts";
 
