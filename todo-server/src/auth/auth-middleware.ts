@@ -1,13 +1,19 @@
 import { RequestHandler } from "express";
-import {verify} from "jsonwebtoken"
+import jwt from "jsonwebtoken"
+import { AuthFailNoToken, AuthFailTokenWrongFormat } from "../utils/error.ts";
 
 export const checkToken: RequestHandler = (req, res, next) => {
+console.log(`->> MIDDLEWARE - auth`,
+)
   const {authToken} = req.cookies
   try {
-    const user = verify(authToken,"secret")
+   if(!authToken){
+      throw new AuthFailNoToken(null)
+    } 
+    const user = jwt.verify(authToken,"elpepe")
     res.locals.user = user
     next()
   } catch (err) {
-    next(err)
+    next(new AuthFailTokenWrongFormat(null))
   }
 }

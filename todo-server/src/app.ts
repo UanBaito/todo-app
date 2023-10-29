@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser"
 import { errorHandler, logger } from "./middleware.ts";
 import { loginRouter } from "./auth/routes.ts";
+import { checkToken } from "./auth/auth-middleware.ts";
 
 export const app = express();
 const port = 3000;
@@ -25,6 +26,7 @@ app.use(logger)
 
 const apiRouter = express.Router()
 apiRouter.use("/login", loginRouter)
+apiRouter.use(checkToken)
 apiRouter.use("/todos", todosRouter);
 app.use("/api", apiRouter)
 
