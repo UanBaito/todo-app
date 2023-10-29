@@ -32,3 +32,10 @@ export class AuthFailNoToken extends CustomError {
     this.clientError = "NO_AUTH"
   }
 }
+
+export class AuthFailTokenWrongFormat extends CustomError {
+  constructor(body: any) {
+    super(body)
+    this.clientError = "NO_AUTH"
+  }
+}
