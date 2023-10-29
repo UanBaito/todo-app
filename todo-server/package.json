@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.1",
     "@types/cookie": "^0.5.3",
     "@types/cookie-parser": "^1.4.5",
     "@types/cors": "^2.8.15",
@@ -26,6 +27,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cookie": "^0.5.0",
     "cookie-parser": "^1.4.6",

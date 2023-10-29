@@ -3,6 +3,7 @@ import { AuthFailTokenWrongFormat, LoginFail } from "../utils/error.ts";
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
 import { UserModel } from "../users/model.ts";
+import bcrypt from "bcrypt";
 
 export const loginRouter = express.Router();
 let userModel = new UserModel();
@@ -10,20 +11,22 @@ let userModel = new UserModel();
 loginRouter.post("/login", async (req, res, next) => {
   console.log(`->> HANDLER - login`);
   try {
-    let { username, password } = req.body;
+    const { username, password } = req.body;
     if (!username || !password) {
       throw new LoginFail(null);
     }
 
-    let user = await userModel.findUserByName("oebyte");
-    console.log(user)
-
-
-    if (username !== "onebyte" || password !== "123") {
+    const user = await userModel.findUserByName(username);
+    if (!user) {
       throw new LoginFail(null);
     }
 
-    //TODO: generate actual secret token
+    const result = await userModel.getUserPwdHash(user.id);
+    const match = await bcrypt.compare(password, result.pwd_hash);
+    if (!match) {
+      throw new LoginFail(null)
+    }
+
     const token = jwt.sign({
       exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
       username,
@@ -47,7 +50,7 @@ loginRouter.post("/login", async (req, res, next) => {
 
 loginRouter.post("/logout", (req, res, next) => {
   console.log(`->> HANDLER - logout`);
-  let { authToken } = req.cookies;
+  const { authToken } = req.cookies;
   try {
     if (!authToken) {
       res.send("USER WAS NOT LOGGED IN");
