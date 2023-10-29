@@ -4,6 +4,7 @@ import db from "../db/db.ts";
 export class UserModel {
   async findUserByName(name: string) {
     //TODO: make username unique on db, or use email instead
+    //TODO: Handle errors in case of pwd/usr not found
     //FIXME: make this type-safe
     const user = await db("users").first("name", "id", "created_at").where("name", name);
     return user;
