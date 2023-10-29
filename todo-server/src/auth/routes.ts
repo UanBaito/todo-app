@@ -1,17 +1,24 @@
 import express from "express";
-import {
-  AuthFailTokenWrongFormat,
-  LoginFail,
-} from "../utils/error.ts";
+import { AuthFailTokenWrongFormat, LoginFail } from "../utils/error.ts";
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
+import { UserModel } from "../users/model.ts";
 
 export const loginRouter = express.Router();
+let userModel = new UserModel();
 
-loginRouter.post("/login", (req, res, next) => {
+loginRouter.post("/login", async (req, res, next) => {
   console.log(`->> HANDLER - login`);
   try {
     let { username, password } = req.body;
+    if (!username || !password) {
+      throw new LoginFail(null);
+    }
+
+    let user = await userModel.findUserByName("oebyte");
+    console.log(user)
+
+
     if (username !== "onebyte" || password !== "123") {
       throw new LoginFail(null);
     }
@@ -42,7 +49,6 @@ loginRouter.post("/logout", (req, res, next) => {
   console.log(`->> HANDLER - logout`);
   let { authToken } = req.cookies;
   try {
-
     if (!authToken) {
       res.send("USER WAS NOT LOGGED IN");
     }
