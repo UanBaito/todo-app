@@ -19,7 +19,7 @@ todosRouter.post("/", async (req, res, next) => {
   try {
     const todo_for_create: TodoForCreate = req.body;
     const todo = await create_todo(todo_for_create.name);
-    res.send(todo);
+    res.status(201).send(todo);
   } catch (err) {
     next(err);
   }
