@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
 import { UserModel } from "../users/model.ts";
 import bcrypt from "bcrypt";
+import { UserForCreate } from "../utils/interfaces.ts";
 
 export const loginRouter = express.Router();
 let userModel = new UserModel();
@@ -11,33 +12,33 @@ let userModel = new UserModel();
 loginRouter.post("/login", async (req, res, next) => {
   console.log(`->> HANDLER - login`);
   try {
-    const { username, password } = req.body;
-    if (!username || !password) {
+    const { name, pwd } = req.body;
+    if (!name || !pwd) {
       throw new LoginFail(null);
     }
 
-    const user = await userModel.findUserByName(username);
+    const user = await userModel.findUserByName(name);
     if (!user) {
       throw new LoginFail(null);
     }
 
     const result = await userModel.getUserPwdHash(user.id);
 
-    if(!result){
+    if (!result) {
       //FIXME: come up with better error describer, since in case the user exists,
       //result should never be undefined. There is a not null constraint on the
       //db for this column (pwd_hash).
-      throw new LoginFail(null)
+      throw new LoginFail(null);
     }
 
-    const match = await bcrypt.compare(password, result.pwd_hash);
+    const match = await bcrypt.compare(pwd, result.pwd_hash);
     if (!match) {
-      throw new LoginFail(null)
+      throw new LoginFail(null);
     }
 
     const token = jwt.sign({
       exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
-      username,
+      name,
     }, process.env.JWT_SECRET!);
 
     const serializedToken = serialize("authToken", token, {
@@ -79,5 +80,28 @@ loginRouter.post("/logout", (req, res, next) => {
     res.send({ "succes": true });
   } catch (err) {
     next(new AuthFailTokenWrongFormat(null));
+  }
+});
+
+loginRouter.post("/register", async (req, res, next) => {
+  console.log(`->> HANDLER - register`);
+  try {
+    const newUserInfo: UserForCreate = req.body;
+    if (!newUserInfo.name || !newUserInfo.pwd) {
+      //TODO: make error for registerfail for empty credentials
+      throw new Error("empty credentials");
+    }
+    const existsUsername = await userModel.findUserByName(newUserInfo.name);
+    if (!!existsUsername) {
+      //TODO: make registerfail new error for occupied username
+      throw new Error("user alredy exist");
+    }
+    //TODO: add user to database
+    //TODO: implement add function to user model
+    console.log(newUserInfo);
+    res.send(newUserInfo);
+  } catch (err) {
+    console.log(err);
+    next(err);
   }
 });

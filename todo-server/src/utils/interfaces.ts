@@ -13,3 +13,7 @@ export interface Todo {
 export interface TodoForCreate {
   name: string;
 }
+export interface UserForCreate {
+  name: string
+  pwd: string
+}
