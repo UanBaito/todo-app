@@ -42,7 +42,7 @@ console.log(`->> MIDDLEWARE - auth`,
       throw new AuthFailNoToken(null)
     } 
     const user = jwt.verify(authToken,process.env.JWT_SECRET!)
-    res.locals.user = user
+    res.locals.ctx = user
     next()
   } catch (err) {
     next(new AuthFailTokenWrongFormat(null))

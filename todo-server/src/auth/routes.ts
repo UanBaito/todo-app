@@ -38,7 +38,7 @@ loginRouter.post("/login", async (req, res, next) => {
 
     const token = jwt.sign({
       exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
-      name,
+      user,
     }, process.env.JWT_SECRET!);
 
     const serializedToken = serialize("authToken", token, {
