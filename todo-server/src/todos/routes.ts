@@ -6,7 +6,12 @@ const todosRouter = express.Router();
 
 todosRouter.get("/", async (_req, res, next) => {
   console.log(`->> HANDLER - list_todo`)
+  const {ctx} = res.locals
   try {
+    if(!ctx) {
+      //TODO: add not context error
+      throw new Error()
+    }
     const todos_list = await list_todo();
     res.send(todos_list);
   } catch (err) {
@@ -16,7 +21,12 @@ todosRouter.get("/", async (_req, res, next) => {
 
 todosRouter.post("/", async (req, res, next) => {
   console.log(`->> HANDLER - create_todo`)
+  const {ctx} = res.locals
   try {
+    if(!ctx) {
+      //TODO: add not context error
+      throw new Error()
+    }
     const todo_for_create: TodoForCreate = req.body;
     const todo = await create_todo(todo_for_create.name);
     res.status(201).send(todo);
@@ -27,7 +37,12 @@ todosRouter.post("/", async (req, res, next) => {
 
 todosRouter.delete("/:id", async (req, res, next) => {
   console.log(`->> HANDLER - delete_todo`)
+  const {ctx} = res.locals
   try {
+    if(!ctx) {
+      //TODO: add not context error
+      throw new Error()
+    }
     const params = req.params;
     const id = parseInt(params.id);
     const todo = await delete_todo(id);
