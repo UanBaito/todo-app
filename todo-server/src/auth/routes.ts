@@ -96,10 +96,8 @@ loginRouter.post("/register", async (req, res, next) => {
       //TODO: make registerfail new error for occupied username
       throw new Error("user alredy exist");
     }
-    //TODO: add user to database
-    //TODO: implement add function to user model
-    console.log(newUserInfo);
-    res.send(newUserInfo);
+    const user = await userModel.CreateUser(newUserInfo)
+    res.status(201).send(user);
   } catch (err) {
     console.log(err);
     next(err);
