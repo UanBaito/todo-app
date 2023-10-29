@@ -26,6 +26,6 @@ export class UserModel {
       //TODO: Create new user deleteFail
       throw new Error();
     }
-    return user
+    return user[0]
   }
 }
