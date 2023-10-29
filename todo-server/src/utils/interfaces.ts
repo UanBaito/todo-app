@@ -10,6 +10,10 @@ export interface Todo {
   name: string;
   created_at: string;
 }
+export interface Ctx {
+  exp: number;
+  userInfo: User;
+}
 export interface TodoForCreate {
   name: string;
 }
