@@ -1,8 +1,8 @@
 import { ErrorRequestHandler, RequestHandler } from "express";
 import { AuthFailNoToken, AuthFailTokenWrongFormat, LoginFail, TodoDeleteFailIdNotFound } from "./utils/error.ts";
+import jwt from "jsonwebtoken"
 
 export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
-   
   console.log(
     `->> ERROR-HANDLER - ${err.constructor.name} ${err.body ? "- " + JSON.stringify(err.body) : ""}\n`,
     `->> CLIENT-ERROR - ${err.clientError}\n`,
@@ -31,3 +31,20 @@ export const logger: RequestHandler = (req, _res, next) => {
   );
   next();
 };
+
+
+export const checkToken: RequestHandler = (req, res, next) => {
+console.log(`->> MIDDLEWARE - auth`,
+)
+  const {authToken} = req.cookies
+  try {
+   if(!authToken){
+      throw new AuthFailNoToken(null)
+    } 
+    const user = jwt.verify(authToken,process.env.JWT_SECRET!)
+    res.locals.user = user
+    next()
+  } catch (err) {
+    next(new AuthFailTokenWrongFormat(null))
+  }
+}

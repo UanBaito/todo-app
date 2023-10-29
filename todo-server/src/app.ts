@@ -3,9 +3,8 @@ import todosRouter from "./todos/routes.ts";
 import cors from "cors";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser"
-import { errorHandler, logger } from "./middleware.ts";
+import { errorHandler, logger, checkToken } from "./middleware.ts";
 import { loginRouter } from "./auth/routes.ts";
-import { checkToken } from "./auth/auth-middleware.ts";
 
 export const app = express();
 const port = 3000;
