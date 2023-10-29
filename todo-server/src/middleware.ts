@@ -14,7 +14,7 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
     res.status(400).send(
       { "error": err.clientError },
     );
-  } else if(err instanceof LoginFail || err instanceof AuthFailTokenWrongFormat || AuthFailNoToken) {
+  } else if(err instanceof LoginFail || err instanceof AuthFailTokenWrongFormat || err instanceof AuthFailNoToken) {
     res.status(401).send({
       "error": err.clientError
     })

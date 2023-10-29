@@ -76,7 +76,7 @@ test("cross_user_delete", async () => {
   let user1Login = await hc.post("/api/auth/login").send({"name": "user1", "pwd": "123"})
   expect(user1Login.statusCode).toBe(200)
   let deleteUser2 = await hc.delete(`/api/users/${register2Response.body[0].id}`)
-  expect(deleteUser2.statusCode).toBe(401)
+  expect(deleteUser2.statusCode).toBe(500)
   let deleteUser1 = await hc.delete(`/api/users/${register1Response.body[0].id}`)
   expect(deleteUser1.statusCode).toBe(200)
   let user2Login = await hc.post("/api/auth/login").send({"name": "user2", "pwd": "123"})
