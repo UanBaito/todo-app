@@ -13,7 +13,7 @@ export class UserModel {
     const pwdHash = await db<User>("users").first("pwd_hash").where("id", id);
     return pwdHash;
   }
-  async CreateUser(newUserInfo: UserForCreate) {
+  async createUser(newUserInfo: UserForCreate) {
     const { name, pwd } = newUserInfo;
     const pwd_hash = await bcrypt.hash(pwd, 12);
     const user = await db<User>("users").insert({ name, pwd_hash }).returning(["id", "name", "created_at"]);
