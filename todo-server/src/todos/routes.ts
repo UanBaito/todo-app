@@ -1,6 +1,7 @@
 import express from "express";
 import { create_todo, delete_todo, list_todo } from "./model.ts";
 import { TodoForCreate } from "../utils/interfaces.ts";
+import { AuthFailNoContext } from "../utils/error.ts";
 
 const todosRouter = express.Router();
 
@@ -9,8 +10,7 @@ todosRouter.get("/", async (_req, res, next) => {
   const {ctx} = res.locals
   try {
     if(!ctx) {
-      //TODO: add not context error
-      throw new Error()
+      throw new AuthFailNoContext(null)
     }
     const todos_list = await list_todo();
     res.send(todos_list);
@@ -24,8 +24,7 @@ todosRouter.post("/", async (req, res, next) => {
   const {ctx} = res.locals
   try {
     if(!ctx) {
-      //TODO: add not context error
-      throw new Error()
+      throw new AuthFailNoContext(null)
     }
     const todo_for_create: TodoForCreate = req.body;
     const todo = await create_todo(todo_for_create.name);
@@ -40,8 +39,7 @@ todosRouter.delete("/:id", async (req, res, next) => {
   const {ctx} = res.locals
   try {
     if(!ctx) {
-      //TODO: add not context error
-      throw new Error()
+      throw new AuthFailNoContext(null)
     }
     const params = req.params;
     const id = parseInt(params.id);

@@ -2,6 +2,7 @@
 import { User, UserForCreate } from "../utils/interfaces.ts";
 import db from "../db/db.ts";
 import bcrypt from "bcrypt";
+import { UserDeleteFailIdNotFound } from "../utils/error.ts";
 
 export class UserModel {
   async findUserByName(name: string) {
@@ -23,8 +24,7 @@ export class UserModel {
   async deleteUser(id: string) {
     const user = await db<User>("users").delete().where("id", id).returning("*")
     if(!user[0]) {
-      //TODO: Create new user deleteFail
-      throw new Error();
+      throw new UserDeleteFailIdNotFound({id});
     }
     return user[0]
   }
