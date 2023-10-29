@@ -41,10 +41,12 @@ loginRouter.post("/login", (req, res, next) => {
 loginRouter.post("/logout", (req, res, next) => {
   let { authToken } = req.cookies;
   try {
+
     if (!authToken) {
       res.send("USER WAS NOT LOGGED IN");
     }
-    jwt.verify(authToken, "secret");
+
+    jwt.verify(authToken, "elpepe");
 
     const serializedToken = serialize("authToken", "", {
       httpOnly: true,

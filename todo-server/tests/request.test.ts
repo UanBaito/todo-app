@@ -8,10 +8,7 @@ test("login", async () => {
 });
 
 test("list_todos", async () => {
-  let response = await hc.get("/api/todos").expect(200);
-  if (response.error) {
-    console.log(response.body);
-  }
+  await hc.get("/api/todos").expect(200);
 });
 
 test("create_and_delete_todo", async () => {
@@ -30,4 +27,11 @@ test("wrong-credentials", async () => {
   let response = await hc.post("/api/auth/login").send({"username": "elpepe", "password": "123"});
   expect(response.statusCode).toBe(401);
 });
+
+test("logout", async () => {
+  let response = await hc.post("/api/auth/logout")
+  expect(response.statusCode).toBe(200)
+  expect(response.header["set-cookie"][0]).toMatch(/Max-Age=0/)
+});
+
 
