@@ -14,7 +14,6 @@ export async function list_todo() {
 
 export async function delete_todo(id: number) {
   const todo = await db<Todo>("todos").where("id", id).del().returning("*")
-  //TODO: throw error if id was not found
    if (todo.length === 0) {
      throw new TodoDeleteFailIdNotFound({
       id: id
