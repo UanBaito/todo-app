@@ -20,4 +20,12 @@ export class UserModel {
     console.log(user);
     return user;
   }
+  async deleteUser(id: string) {
+    const user = await db<User>("users").delete().where("id", id).returning("*")
+    if(!user[0]) {
+      //TODO: Create new user deleteFail
+      throw new Error();
+    }
+    return user
+  }
 }
