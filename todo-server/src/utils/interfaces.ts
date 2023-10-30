@@ -9,6 +9,7 @@ export interface Todo {
   cid: string;
   name: string;
   created_at: string;
+  isCompleted: boolean;
 }
 export interface Ctx {
   exp: number;
