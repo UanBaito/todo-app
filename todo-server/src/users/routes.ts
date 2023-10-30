@@ -2,6 +2,7 @@ import express from "express";
 import { UserModel } from "./model.ts";
 import { AuthFailContextDoesntMatchRequest, AuthFailNoContext, UserDeleteFailIdNotFound } from "../utils/error.ts";
 import { Ctx } from "../utils/interfaces.ts";
+import { serialize } from "cookie";
 
 export const userRouter = express.Router();
 const userModel = new UserModel();
@@ -21,7 +22,15 @@ userRouter.delete("/:id", async (req, res, next) => {
       throw new UserDeleteFailIdNotFound(null);
     }
     const user = await userModel.deleteUser(id);
-    //TODO: delete user token on user delete
+    const serializedToken = serialize("authToken", "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 0,
+      path: "/",
+    });
+
+    res.setHeader("Set-Cookie", serializedToken);
     //TODO: Check if i am sending all objects as jsons
     res.json(user);
   } catch (err) {
