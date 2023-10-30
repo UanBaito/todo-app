@@ -31,6 +31,9 @@ test("update_todo", async () => {
     "name": "updatedTodo",
     "isCompleted": true,
   }).expect(200);
+  expect(updateResponse.body.name).toBe("updatedTodo")
+  expect(updateResponse.body.isCompleted).toBe(true)
+  console.log(updateResponse.body)
   await hc.delete(`/api/todos/${updateResponse.body.id}`).expect(200)
 });
 
