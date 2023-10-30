@@ -19,6 +19,7 @@ export interface TodoForCreate {
   name: string;
 }
 export interface TodoForUpdate {
+  id: number;
   name: string;
   isCompleted: boolean;
 }
