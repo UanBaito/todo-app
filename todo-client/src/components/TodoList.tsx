@@ -4,7 +4,9 @@ export default function () {
   const todoListQuery = useQuery({
     queryKey: ["todosList"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:3000/api/todos");
+      const res = await fetch("http://localhost:3000/api/todos", {
+        credentials: "include",
+      });
       if (!res.ok) {
         throw new Error();
       }
