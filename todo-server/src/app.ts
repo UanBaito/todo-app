@@ -10,6 +10,10 @@ import { userRouter } from "./users/routes.ts";
 export const app = express();
 const port = 3000;
 
+app.use(
+  cors({ origin: "http://localhost:5173", methods: "POST", credentials: true }),
+);
+app.use(cookieParser());
 //just to print a line between request
 app.use((_req, _res, next) => {
   _res.on("finish", () => {
@@ -18,8 +22,6 @@ app.use((_req, _res, next) => {
   next();
 });
 
-app.use(cookieParser());
-app.use(cors());
 app.use(bodyParser.json());
 app.use(logger);
 
