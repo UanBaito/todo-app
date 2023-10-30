@@ -1,3 +1,4 @@
+import AddTodo from "./components/AddTodo";
 import TodoList from "./components/TodoList";
 import getUserData from "./hooks/getUserData";
 
@@ -12,6 +13,7 @@ export default function Dashboard() {
   }
   return (
     <div>
+      <AddTodo/>
       <TodoList />
       {queryState.data.name}
     </div>
