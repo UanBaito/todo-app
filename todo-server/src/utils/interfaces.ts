@@ -18,6 +18,10 @@ export interface Ctx {
 export interface TodoForCreate {
   name: string;
 }
+export interface TodoForUpdate {
+  name: string;
+  isCompleted: boolean;
+}
 export interface UserForCreate {
   name: string;
   pwd: string;
