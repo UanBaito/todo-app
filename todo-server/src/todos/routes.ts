@@ -1,6 +1,6 @@
 import express from "express";
 import { TodosModel } from "./model.ts";
-import { Ctx, TodoForCreate } from "../utils/interfaces.ts";
+import { Ctx, TodoForCreate, TodoForUpdate } from "../utils/interfaces.ts";
 import {
   AuthFailContextDoesntMatchRequest,
   AuthFailNoContext,
@@ -55,7 +55,7 @@ todosRouter.delete("/:id", async (req, res, next) => {
     const parsedId = parseInt(id);
     const todo = await todosModel.getTodoById(parsedId);
     if (todo.cid !== userInfo.id) {
-      console.log(todo.id, userInfo.id)
+      console.log(todo.id, userInfo.id);
       throw new AuthFailContextDoesntMatchRequest(null);
     }
 
@@ -66,4 +66,27 @@ todosRouter.delete("/:id", async (req, res, next) => {
   }
 });
 
+todosRouter.put("/", async (req, res, next) => {
+  const updateInfo: TodoForUpdate = req.body();
+  const userInfo = res.locals as Ctx;
+  try {
+    if (!userInfo) {
+      throw new AuthFailNoContext(null);
+    }
+
+    if (!updateInfo.name || typeof updateInfo.isCompleted !== "boolean") {
+      //TODO: fix
+      throw new EmptyForm(null);
+    }
+
+    const todo = await todosModel.updateTodo(
+      updateInfo.id,
+      updateInfo.name,
+      updateInfo.isCompleted,
+    );
+    res.send(todo);
+  } catch (err) {
+    next(err);
+  }
+});
 export default todosRouter;
