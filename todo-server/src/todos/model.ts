@@ -12,6 +12,7 @@ export class TodosModel {
     const todos = await db<Todo>("todos").select().where("cid", cid);
     return todos;
   }
+
   async getTodoById(id: number) {
     const todo = await db<Todo>("todos").first().where("id", id);
     if (!todo) {
@@ -29,5 +30,13 @@ export class TodosModel {
       });
     }
     return todo[0];
+  }
+  async updateTodo(id:number, name: string, isCompleted: boolean) {
+    const todo = await db<Todo>("todos").where("id", id).update({name, isCompleted}).returning("*")
+    if(todo.length === 0) {
+      //TODO: make new todoupdateidnotfound error
+      throw new Error()
+    } 
+    return todo[0]
   }
 }
