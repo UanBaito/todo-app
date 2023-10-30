@@ -1,3 +1,4 @@
+import TodoList from "./components/TodoList";
 import getUserData from "./hooks/getUserData";
 
 export default function Dashboard() {
@@ -9,5 +10,10 @@ export default function Dashboard() {
   if (queryState.isError) {
     return <div>error</div>;
   }
-  return <div>{queryState.data.name}</div>;
+  return (
+    <div>
+      <TodoList />
+      {queryState.data.name}
+    </div>
+  );
 }
