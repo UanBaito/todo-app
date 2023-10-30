@@ -67,7 +67,8 @@ todosRouter.delete("/:id", async (req, res, next) => {
 });
 
 todosRouter.put("/", async (req, res, next) => {
-  const updateInfo: TodoForUpdate = req.body();
+  console.log(`->> HANDLER - update_todo`);
+  const updateInfo: TodoForUpdate = req.body;
   const userInfo = res.locals as Ctx;
   try {
     if (!userInfo) {
