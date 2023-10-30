@@ -43,19 +43,12 @@ userRouter.delete("/:id", async (req, res, next) => {
   }
 });
 
-userRouter.get("/:id", async (req, res, next) => {
+userRouter.get("/", async (_req, res, next) => {
   console.log("->> HANDLER - get_user");
   const { userInfo } = res.locals as Ctx;
-  const { id } = req.params;
   try {
     if (!userInfo) {
       throw new AuthFailNoContext(null);
-    }
-    if (!id) {
-      throw new EmptyForm(null);
-    }
-    if (userInfo.id !== id) {
-      throw new AuthFailContextDoesntMatchRequest(null);
     }
     res.send(userInfo);
   } catch (err) {
