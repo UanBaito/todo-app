@@ -53,7 +53,7 @@ export const logger: RequestHandler = (req, _res, next) => {
   console.log(
     `->> MIDDLEWARE - cookies - ${
       JSON.stringify(
-        Object.keys(req.cookies).length === 0 ? "None" : req.cookies,
+        Object.keys(req.cookies).length === 0 ? "None" : "Token",
       )
     }`,
   );
