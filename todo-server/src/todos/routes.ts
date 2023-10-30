@@ -55,7 +55,6 @@ todosRouter.delete("/:id", async (req, res, next) => {
     const parsedId = parseInt(id);
     const todo = await todosModel.getTodoById(parsedId);
     if (todo.cid !== userInfo.id) {
-      console.log(todo.id, userInfo.id);
       throw new AuthFailContextDoesntMatchRequest(null);
     }
 

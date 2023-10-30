@@ -18,7 +18,6 @@ export class UserModel {
     const { name, pwd } = newUserInfo;
     const pwd_hash = await bcrypt.hash(pwd, 12);
     const user = await db<User>("users").insert({ name, pwd_hash }).returning(["id", "name", "created_at"]);
-    console.log(user);
     return user;
   }
   async deleteUser(id: string) {

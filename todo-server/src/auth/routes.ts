@@ -97,7 +97,6 @@ loginRouter.post("/register", async (req, res, next) => {
     const user = await userModel.createUser(newUserInfo)
     res.status(201).send(user);
   } catch (err) {
-    console.log(err);
     next(err);
   }
 });
