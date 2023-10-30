@@ -1,5 +1,10 @@
 import express from "express";
-import { AuthFailTokenWrongFormat, EmptyForm, LoginFail, RegisterFailOccupiedUsername } from "../utils/error.ts";
+import {
+  AuthFailTokenWrongFormat,
+  EmptyForm,
+  LoginFail,
+  RegisterFailOccupiedUsername,
+} from "../utils/error.ts";
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
 import { UserModel } from "../users/model.ts";
@@ -94,7 +99,7 @@ loginRouter.post("/register", async (req, res, next) => {
     if (!!existsUsername) {
       throw new RegisterFailOccupiedUsername(null);
     }
-    const user = await userModel.createUser(newUserInfo)
+    const user = await userModel.createUser(newUserInfo);
     res.status(201).send(user);
   } catch (err) {
     next(err);
