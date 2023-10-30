@@ -28,7 +28,7 @@ todosRouter.post("/", async (req, res, next) => {
       throw new AuthFailNoContext(null);
     }
     const todo_for_create: TodoForCreate = req.body;
-    const todo = await create_todo(todo_for_create.name);
+    const todo = await create_todo(todo_for_create.name, userInfo.id);
     res.status(201).send(todo);
   } catch (err) {
     next(err);
