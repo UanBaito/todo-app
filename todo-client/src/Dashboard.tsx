@@ -9,5 +9,5 @@ export default function Dashboard() {
   if (queryState.isError) {
     return <div>error</div>;
   }
-  return <div>{queryState.data}</div>;
+  return <div>{queryState.data.name}</div>;
 }
