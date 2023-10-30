@@ -1,9 +1,10 @@
 import express from "express";
-import { create_todo, delete_todo, list_todo } from "./model.ts";
+import {TodosModel} from "./model.ts";
 import { Ctx, TodoForCreate } from "../utils/interfaces.ts";
 import { AuthFailNoContext } from "../utils/error.ts";
 
 const todosRouter = express.Router();
+const todosModel = new TodosModel()
 
 //TODO: implement context for all of these
 todosRouter.get("/", async (_req, res, next) => {
@@ -13,7 +14,7 @@ todosRouter.get("/", async (_req, res, next) => {
     if (!userInfo) {
       throw new AuthFailNoContext(null);
     }
-    const todos_list = await list_todo();
+    const todos_list = await todosModel.listTodo();
     res.send(todos_list);
   } catch (err) {
     next(err);
@@ -28,7 +29,7 @@ todosRouter.post("/", async (req, res, next) => {
       throw new AuthFailNoContext(null);
     }
     const todo_for_create: TodoForCreate = req.body;
-    const todo = await create_todo(todo_for_create.name, userInfo.id);
+    const todo = await todosModel.createTodo(todo_for_create.name, userInfo.id);
     res.status(201).send(todo);
   } catch (err) {
     next(err);
@@ -44,7 +45,7 @@ todosRouter.delete("/:id", async (req, res, next) => {
     }
     const params = req.params;
     const id = parseInt(params.id);
-    const todo = await delete_todo(id);
+    const todo = await todosModel.deleteTodo(id);
     res.send(todo);
   } catch (err) {
     next(err);
