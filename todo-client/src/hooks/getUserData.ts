@@ -4,7 +4,7 @@ export default function getUserData() {
   const userDataQuery = useQuery({
     queryKey: ["userData"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:3000/api/users/");
+      const res = await fetch("http://localhost:3000/api/users/", {credentials: "include"});
       if (!res.ok) {
         console.log("error fetching user");
         throw new Error();
