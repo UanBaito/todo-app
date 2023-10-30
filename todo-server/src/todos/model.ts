@@ -8,8 +8,8 @@ export class TodosModel {
   return todo[0];
 }
 
- async listTodo() {
-  const todos = await db<Todo>("todos").select()
+ async listTodoByCid(cid: string) {
+  const todos = await db<Todo>("todos").select().where("cid", cid)
   return todos
 }
 
@@ -22,6 +22,7 @@ export class TodosModel {
    }
   return todo[0]
 }
+  
 }
 
 

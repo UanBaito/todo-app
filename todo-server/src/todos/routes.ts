@@ -14,7 +14,7 @@ todosRouter.get("/", async (_req, res, next) => {
     if (!userInfo) {
       throw new AuthFailNoContext(null);
     }
-    const todos_list = await todosModel.listTodo();
+    const todos_list = await todosModel.listTodoByCid(userInfo.id);
     res.send(todos_list);
   } catch (err) {
     next(err);
