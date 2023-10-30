@@ -74,7 +74,6 @@ export const checkToken: RequestHandler = (req, res, next) => {
     if (!("user" in tokenInfo)) {
       throw new Error();
     }
-    //FIXME: Find a way for this to not create a nested object "userInfo" in object "user". It is redundant.
     (res.locals as Ctx).userInfo = tokenInfo.user;
     next();
   } catch (err) {
