@@ -77,6 +77,6 @@ export const checkToken: RequestHandler = (req, res, next) => {
     (res.locals as Ctx).userInfo = tokenInfo.user;
     next();
   } catch (err) {
-    next(new AuthFailTokenWrongFormat(null));
+    next(err);
   }
 };
