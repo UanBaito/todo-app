@@ -6,7 +6,7 @@ export interface User {
 }
 export interface Todo {
   id: number;
-  cid: number;
+  cid: string;
   name: string;
   created_at: string;
 }
@@ -18,6 +18,12 @@ export interface TodoForCreate {
   name: string;
 }
 export interface UserForCreate {
-  name: string
-  pwd: string
+  name: string;
+  pwd: string;
 }
+
+export type AuthToken = {
+  exp: number;
+  user: User;
+  iat: number;
+};
