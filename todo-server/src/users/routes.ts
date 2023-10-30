@@ -3,7 +3,6 @@ import { UserModel } from "./model.ts";
 import {
   AuthFailContextDoesntMatchRequest,
   AuthFailNoContext,
-  EmptyForm,
   UserDeleteFailIdNotFound,
 } from "../utils/error.ts";
 import { Ctx } from "../utils/interfaces.ts";
