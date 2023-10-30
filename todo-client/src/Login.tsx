@@ -11,6 +11,10 @@ export default function Login() {
     mutationFn: async () => {
       const res = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        credentials: "include",
         body: JSON.stringify({
           name: credentials.name,
           pwd: credentials.pwd,
@@ -34,7 +38,7 @@ export default function Login() {
   return (
     <form
       onSubmit={(e) => {
-        e.preventDefault()
+        e.preventDefault();
         loginMutation.mutate();
       }}
     >
