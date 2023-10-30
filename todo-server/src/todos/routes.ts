@@ -1,10 +1,14 @@
 import express from "express";
-import {TodosModel} from "./model.ts";
+import { TodosModel } from "./model.ts";
 import { Ctx, TodoForCreate } from "../utils/interfaces.ts";
-import { AuthFailNoContext } from "../utils/error.ts";
+import {
+  AuthFailContextDoesntMatchRequest,
+  AuthFailNoContext,
+  EmptyForm,
+} from "../utils/error.ts";
 
 const todosRouter = express.Router();
-const todosModel = new TodosModel()
+const todosModel = new TodosModel();
 
 //TODO: implement context for all of these
 todosRouter.get("/", async (_req, res, next) => {
@@ -39,14 +43,24 @@ todosRouter.post("/", async (req, res, next) => {
 todosRouter.delete("/:id", async (req, res, next) => {
   console.log(`->> HANDLER - delete_todo`);
   const { userInfo } = res.locals as Ctx;
+  const { id } = req.params;
   try {
     if (!userInfo) {
       throw new AuthFailNoContext(null);
     }
-    const params = req.params;
-    const id = parseInt(params.id);
-    const todo = await todosModel.deleteTodo(id);
-    res.send(todo);
+    if (!id) {
+      throw new EmptyForm(null);
+    }
+
+    const parsedId = parseInt(id);
+    const todo = await todosModel.getTodoById(parsedId);
+    if (todo.cid !== userInfo.id) {
+      console.log(todo.id, userInfo.id)
+      throw new AuthFailContextDoesntMatchRequest(null);
+    }
+
+    const deletedTodo = await todosModel.deleteTodo(parsedId);
+    res.send(deletedTodo);
   } catch (err) {
     next(err);
   }
