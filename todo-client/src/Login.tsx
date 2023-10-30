@@ -48,18 +48,18 @@ export default function Login() {
         <input
           name="name"
           type="text"
-          placeholder="Username"
+          placeholder="  Username"
           value={credentials.name}
           onChange={handleChange}
         />
         <input
           name="pwd"
           type="password"
-          placeholder="password"
+          placeholder="  Password"
           value={credentials.pwd}
           onChange={handleChange}
         />
-        <button>Submit</button>
+        <button>Sign in</button>
       </form>
     </div>
   );
