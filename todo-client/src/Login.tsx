@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import styles from "./styles/Login.module.scss";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({
@@ -36,27 +37,30 @@ export default function Login() {
   }
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        loginMutation.mutate();
-      }}
-    >
-      <input
-        name="name"
-        type="text"
-        placeholder="Username"
-        value={credentials.name}
-        onChange={handleChange}
-      />
-      <input
-        name="pwd"
-        type="password"
-        placeholder="password"
-        value={credentials.pwd}
-        onChange={handleChange}
-      />
-      <button>Submit</button>
-    </form>
+    <div className={styles.container}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          loginMutation.mutate();
+        }}
+        className={styles.form}
+      >
+        <input
+          name="name"
+          type="text"
+          placeholder="Username"
+          value={credentials.name}
+          onChange={handleChange}
+        />
+        <input
+          name="pwd"
+          type="password"
+          placeholder="password"
+          value={credentials.pwd}
+          onChange={handleChange}
+        />
+        <button>Submit</button>
+      </form>
+    </div>
   );
 }
