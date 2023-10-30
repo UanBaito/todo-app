@@ -2,8 +2,8 @@ import { Todo } from "../utils/interfaces.ts";
 import db from "../db/db.ts";
 import { TodoDeleteFailIdNotFound } from "../utils/error.ts";
 
-export async function create_todo(name: string) {
-  const todo = await db<Todo>("todos").insert({ name: name }).returning("*");
+export async function create_todo(name: string, cid: string) {
+  const todo = await db<Todo>("todos").insert({ name, cid }).returning("*");
   return todo[0];
 }
 
