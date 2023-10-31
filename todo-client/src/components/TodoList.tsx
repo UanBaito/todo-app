@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import styles from "./styles/TodoList.module.scss"
+import styles from "./styles/TodoList.module.scss";
 
 export default function TodoList() {
   const todoListQuery = useQuery({
@@ -124,11 +124,14 @@ export function TodoItem({ todo }: { todo: any }) {
               type="checkbox"
               checked={isCompleted}
               onChange={() => {
-                setIsCompleted((prevState) => !prevState)
+                setIsCompleted((prevState) => !prevState);
                 toggleCompleteMutation.mutate();
               }}
             />
-            {todo.name}
+            <h2>
+              {todo.name}
+            </h2>
+
             <input
               className={styles.edit_checkbox}
               name="edit"
