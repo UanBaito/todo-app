@@ -1,4 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function TodoList() {
   const todoListQuery = useQuery({
@@ -28,5 +29,78 @@ export default function TodoList() {
 }
 
 export function TodoItem({ todo }: { todo: any }) {
-  return <li>{todo.name}</li>;
+  const [isEditing, setIsEditing] = useState(false);
+  const [todoName, setTodoName] = useState(todo.name);
+  const queryClient = useQueryClient()
+
+  const updateQueryMutation = useMutation({
+    mutationFn: async () => {
+      const res = await fetch("http://localhost:3000/api/todos", {
+        method: "PUT",
+        credentials: "include",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(
+          {
+            name: todoName,
+            id: todo.id,
+            isCompleted: todo.isCompleted,
+          },
+        ),
+      });
+      if (!res.ok) {
+        throw new Error();
+      }
+      const result = await res.json();
+      return result;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ["todosList"]})
+    }
+  });
+
+  return (
+    <>
+      {isEditing
+        ? (
+          <li>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setIsEditing(false);
+                updateQueryMutation.mutate();
+              }}
+            >
+              <input
+                name="todo name"
+                type="text"
+                value={todoName}
+                onChange={(e) => {
+                  setTodoName(e.target.value);
+                }}
+              />
+              <button>submit</button>
+            </form>
+            <input
+              name="edit"
+              type="checkbox"
+              onChange={() => {
+                setIsEditing((prevState) => !prevState);
+              }}
+            />
+          </li>
+        )
+        : (
+          <li>
+            {todo.name}
+            <input
+              name="edit"
+              type="checkbox"
+              onChange={() => {
+                setIsEditing((prevState) => !prevState);
+              }}
+            />
+          </li>
+        )}
+    </>
+  );
 }
