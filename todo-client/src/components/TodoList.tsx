@@ -31,9 +31,9 @@ export default function TodoList() {
 export function TodoItem({ todo }: { todo: any }) {
   const [isEditing, setIsEditing] = useState(false);
   const [todoName, setTodoName] = useState(todo.name);
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
-  const updateQueryMutation = useMutation({
+  const updateTodoMutation = useMutation({
     mutationFn: async () => {
       const res = await fetch("http://localhost:3000/api/todos", {
         method: "PUT",
@@ -54,8 +54,32 @@ export function TodoItem({ todo }: { todo: any }) {
       return result;
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["todosList"] });
+    },
+  });
+
+  const toggleCompleteMutation = useMutation({
+    mutationFn: async () => {
+      const res = await fetch("http://localhost:3000/api/todos", {
+        method: "PUT",
+        credentials: "include",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+          name: todo.name,
+          id: todo.id,
+          isCompleted: !todo.isCompleted,
+        }),
+      });
+      if (!res.ok) {
+        throw new Error();
+      }
+      const result = await res.json();
+      return result;
+    },
+    onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ["todosList"]})
     }
+
   });
 
   return (
@@ -67,7 +91,7 @@ export function TodoItem({ todo }: { todo: any }) {
               onSubmit={(e) => {
                 e.preventDefault();
                 setIsEditing(false);
-                updateQueryMutation.mutate();
+                updateTodoMutation.mutate();
               }}
             >
               <input
