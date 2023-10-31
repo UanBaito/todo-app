@@ -1,3 +1,5 @@
+@use "../../styles/variables" as v;
+
 .list {
   list-style: none;
   padding: 0;
@@ -10,21 +12,44 @@
     width: 100%;
     display: flex;
     border-bottom: 1px gray solid;
+    padding: 0.4rem;
+    input {
+
+      flex-shrink: 0;
+    }
+
     h2 {
       margin: 0;
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: 500;
       word-break: break-all;
+      padding-left: 0.4rem;
     }
     button {
-
     }
 
-    .edit_checkbox {
+    .edit_checkbox[type=checkbox] {
       margin-left: auto;
+
     }
-    .completed_checkbox {
+
+    .completed_checkbox[type="checkbox"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      width: 1.5rem;
+      height: 1.5rem;
+      border: 12px solid v.$background-300;
+      box-shadow: 0 0 0 1px white;
+      margin: auto 2px;
+      transition: border ease 0.1s;
+      background-color: v.$primary-300;
     }
+
+    .completed_checkbox[type="checkbox"]:checked {
+      border: 3px solid v.$background-300;
+    }
+
     .name_input {
     }
   }
