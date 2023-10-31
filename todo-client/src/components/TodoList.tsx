@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import styles from "./styles/TodoList.module.scss"
 
 export default function TodoList() {
   const todoListQuery = useQuery({
@@ -21,11 +22,10 @@ export default function TodoList() {
   if (todoListQuery.isError) {
     return <div>error</div>;
   }
-  console.log(todoListQuery.data);
   const mappedTodos = todoListQuery.data.map((todo: any) => {
     return <TodoItem todo={todo} key={todo.id} />;
   });
-  return <ul>{mappedTodos}</ul>;
+  return <ul className={styles.list}>{mappedTodos}</ul>;
 }
 
 export function TodoItem({ todo }: { todo: any }) {
@@ -95,6 +95,7 @@ export function TodoItem({ todo }: { todo: any }) {
               }}
             >
               <input
+                className={styles.name_input}
                 name="todo name"
                 type="text"
                 value={todoName}
@@ -105,6 +106,7 @@ export function TodoItem({ todo }: { todo: any }) {
               <button>submit</button>
             </form>
             <input
+              className={styles.edit_checkbox}
               name="edit"
               type="checkbox"
               checked={isEditing}
@@ -117,6 +119,7 @@ export function TodoItem({ todo }: { todo: any }) {
         : (
           <li>
             <input
+              className={styles.completed_checkbox}
               name="completed"
               type="checkbox"
               checked={isCompleted}
@@ -127,8 +130,10 @@ export function TodoItem({ todo }: { todo: any }) {
             />
             {todo.name}
             <input
+              className={styles.edit_checkbox}
               name="edit"
               type="checkbox"
+              checked={isEditing}
               onChange={() => {
                 setIsEditing((prevState) => !prevState);
               }}
