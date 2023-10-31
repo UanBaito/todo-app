@@ -31,6 +31,7 @@ export default function TodoList() {
 export function TodoItem({ todo }: { todo: any }) {
   const [isEditing, setIsEditing] = useState(false);
   const [todoName, setTodoName] = useState(todo.name);
+  const [isCompleted, setIsCompleted] = useState<boolean>(todo.isCompleted);
   const queryClient = useQueryClient();
 
   const updateTodoMutation = useMutation({
@@ -67,7 +68,7 @@ export function TodoItem({ todo }: { todo: any }) {
         body: JSON.stringify({
           name: todo.name,
           id: todo.id,
-          isCompleted: !todo.isCompleted,
+          isCompleted: isCompleted,
         }),
       });
       if (!res.ok) {
@@ -77,9 +78,8 @@ export function TodoItem({ todo }: { todo: any }) {
       return result;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ["todosList"]})
-    }
-
+      queryClient.invalidateQueries({ queryKey: ["todosList"] });
+    },
   });
 
   return (
@@ -115,6 +115,15 @@ export function TodoItem({ todo }: { todo: any }) {
         )
         : (
           <li>
+            <input
+              name="completed"
+              type="checkbox"
+              checked={isCompleted}
+              onChange={() => {
+                setIsCompleted((prevState) => !prevState)
+                toggleCompleteMutation.mutate();
+              }}
+            />
             {todo.name}
             <input
               name="edit"
