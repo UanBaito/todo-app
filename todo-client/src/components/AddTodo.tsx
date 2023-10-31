@@ -8,6 +8,7 @@ export default function AddTodo() {
       const res = await fetch("http://localhost:3000/api/todos", {
         method: "POST",
         credentials: "include",
+        headers: {"Content-type": "application/json"},
         body: JSON.stringify({
           name: todoName,
         }),
