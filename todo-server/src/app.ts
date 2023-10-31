@@ -11,7 +11,11 @@ export const app = express();
 const port = 3000;
 
 app.use(
-  cors({ origin: "http://localhost:5173", methods: "POST", credentials: true }),
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["POST", "PUT", "DELETE"],
+    credentials: true,
+  }),
 );
 app.use(cookieParser());
 //just to print a line between request
