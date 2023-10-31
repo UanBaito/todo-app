@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import styles from "./styles/TodoList.module.scss";
+import { FaPencil, FaXmark } from "react-icons/fa6";
 
 export default function TodoList() {
   const todoListQuery = useQuery({
@@ -33,7 +34,6 @@ export function TodoItem({ todo }: { todo: any }) {
   const [todoName, setTodoName] = useState(todo.name);
   const [isCompleted, setIsCompleted] = useState<boolean>(todo.isCompleted);
   const queryClient = useQueryClient();
-  
 
   const updateTodoMutation = useMutation({
     mutationFn: async () => {
@@ -106,7 +106,11 @@ export function TodoItem({ todo }: { todo: any }) {
               />
               <button>submit</button>
             </form>
+            <label htmlFor={`edit_checkbox_${todo.id}`}>
+              <FaXmark></FaXmark>
+            </label>
             <input
+              id={`edit_checkbox_${todo.id}`}
               className={styles.edit_checkbox}
               name="edit"
               type="checkbox"
@@ -132,7 +136,11 @@ export function TodoItem({ todo }: { todo: any }) {
             <h2>
               {todo.name}
             </h2>
+            <label htmlFor={`edit_checkbox_${todo.id}`}>
+              <FaPencil></FaPencil>
+            </label>
             <input
+              id={`edit_checkbox_${todo.id}`}
               className={styles.edit_checkbox}
               name="edit"
               type="checkbox"
