@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-export default function () {
+export default function TodoList() {
   const todoListQuery = useQuery({
     queryKey: ["todosList"],
     queryFn: async () => {
@@ -21,5 +21,12 @@ export default function () {
     return <div>error</div>;
   }
   console.log(todoListQuery.data);
-  return <div>loaded</div>;
+  const mappedTodos = todoListQuery.data.map((todo: any) => {
+    return <TodoItem todo={todo} key={todo.id} />;
+  });
+  return <ul>{mappedTodos}</ul>;
+}
+
+export function TodoItem({ todo }: { todo: any }) {
+  return <li>{todo.name}</li>;
 }
