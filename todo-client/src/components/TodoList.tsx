@@ -107,6 +107,7 @@ export function TodoItem({ todo }: { todo: any }) {
             <input
               name="edit"
               type="checkbox"
+              checked={isEditing}
               onChange={() => {
                 setIsEditing((prevState) => !prevState);
               }}
