@@ -33,6 +33,7 @@ export function TodoItem({ todo }: { todo: any }) {
   const [todoName, setTodoName] = useState(todo.name);
   const [isCompleted, setIsCompleted] = useState<boolean>(todo.isCompleted);
   const queryClient = useQueryClient();
+  
 
   const updateTodoMutation = useMutation({
     mutationFn: async () => {
@@ -131,7 +132,6 @@ export function TodoItem({ todo }: { todo: any }) {
             <h2>
               {todo.name}
             </h2>
-
             <input
               className={styles.edit_checkbox}
               name="edit"
