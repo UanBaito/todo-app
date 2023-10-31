@@ -1,8 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
 export default function AddTodo() {
   const [todoName, setTodoName] = useState("");
+  const queryClient = useQueryClient()
   const addTodoMutation = useMutation({
     mutationFn: async () => {
       const res = await fetch("http://localhost:3000/api/todos", {
@@ -19,6 +20,9 @@ export default function AddTodo() {
       const result = await res.json();
       return result;
     },
+    onSuccess: () => {
+     queryClient.invalidateQueries({queryKey: ["todosList"]}) 
+    }
   });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
