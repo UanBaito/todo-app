@@ -1,0 +1,31 @@
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  li {
+    width: 100%;
+    display: flex;
+    border-bottom: 1px gray solid;
+    h2 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 500;
+      word-break: break-all;
+    }
+    button {
+
+    }
+
+    .edit_checkbox {
+      margin-left: auto;
+    }
+    .completed_checkbox {
+    }
+    .name_input {
+    }
+  }
+}
