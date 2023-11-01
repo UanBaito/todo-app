@@ -13,9 +13,6 @@
     display: flex;
     border-bottom: 1px gray solid;
     padding: 0.4rem;
-    input {
-      flex-shrink: 0;
-    }
 
     h2 {
       margin: 0;
@@ -28,36 +25,11 @@
     button {
     }
 
-    [type="checkbox"] {
+    .completed_checkbox[type="checkbox"] {
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
       margin: auto 2px;
-    }
-    
-    label {
-      margin-left: auto;
-      width: 20px;
-      height: 20px;
-      margin-right: 0.5rem;
-      flex-shrink: 0;
-      margin-top: auto;
-      margin-bottom: auto;
-      svg {
-        width: 20px;
-        height: 20px;
-      }
-    }
-
-    .edit_checkbox[type="checkbox"] {
-      margin-left: auto;
-      width: 1.5rem;
-      height: 1.5rem;
-      background-color: white;
-      display: none;
-    }
-
-    .completed_checkbox[type="checkbox"] {
       width: 1.5rem;
       height: 1.5rem;
       border: 12px solid v.$background-300;
@@ -68,24 +40,6 @@
 
     .completed_checkbox[type="checkbox"]:checked {
       border: 3px solid v.$background-300;
-    }
-
-    form {
-      display:  flex;
-flex-grow: 0;
-max-width: 70%;
-    }
-
-    .name_input {
-      font-family: inherit;
-      font-size: 1.2rem;
-      font-weight: 500;
-      word-break: break-all;
-      background-color: transparent;
-      border: none;
-      color: white;
-      resize: none;
-      flex-grow: 0;
     }
   }
 }
