@@ -70,7 +70,22 @@
       border: 3px solid v.$background-300;
     }
 
+    form {
+      display:  flex;
+flex-grow: 0;
+max-width: 70%;
+    }
+
     .name_input {
+      font-family: inherit;
+      font-size: 1.2rem;
+      font-weight: 500;
+      word-break: break-all;
+      background-color: transparent;
+      border: none;
+      color: white;
+      resize: none;
+      flex-grow: 0;
     }
   }
 }
