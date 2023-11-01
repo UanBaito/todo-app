@@ -96,8 +96,8 @@ export function TodoItem({ todo }: { todo: any }) {
       return result;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ["todosList"]})
-    }
+      queryClient.invalidateQueries({ queryKey: ["todosList"] });
+    },
   });
 
   return (
@@ -121,6 +121,7 @@ export function TodoItem({ todo }: { todo: any }) {
             deleteTodoMutation.mutate();
           }}
         >
+          <FaXmark />
         </button>
       </li>
     </>
