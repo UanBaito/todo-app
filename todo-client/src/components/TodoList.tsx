@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import styles from "./styles/TodoList.module.scss";
-import { FaPencil, FaXmark } from "react-icons/fa6";
+import { FaXmark } from "react-icons/fa6";
 
 export default function TodoList() {
   const todoListQuery = useQuery({
