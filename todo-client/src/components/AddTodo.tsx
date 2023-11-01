@@ -7,6 +7,9 @@ export default function AddTodo() {
   const queryClient = useQueryClient();
   const addTodoMutation = useMutation({
     mutationFn: async () => {
+      if(todoName === "") {
+        throw new Error()
+      }
       const res = await fetch("http://localhost:3000/api/todos", {
         method: "POST",
         credentials: "include",
