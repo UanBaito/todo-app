@@ -1,18 +1,22 @@
 @use "../../styles/variables" as v;
 .container {
+  background-color: v.$secondary-200;
+  padding: 0.9rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px gray solid;
 
   form {
     display: flex;
+    justify-content: space-between;
+
     input {
       background-color: transparent;
       border: none;
       outline: none;
-      flex-grow: 1;
       border-bottom: 1px solid gray;
       color: white;
       padding: 0.2rem;
       font-size: 1.2rem;
-      margin-right: 1.2rem;
     }
 
     button {
