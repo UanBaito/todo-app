@@ -1,12 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import styles from "./styles/Login.module.scss";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({
     name: "",
     pwd: "",
   });
+  const navigate = useNavigate()
 
   const loginMutation = useMutation({
     mutationFn: async () => {
@@ -27,6 +29,9 @@ export default function Login() {
       const result = await res.json();
       return result;
     },
+    onSuccess: () => {
+      navigate("/dashboard")
+    }
   });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
