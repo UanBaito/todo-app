@@ -1,17 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import styles from "./styles/AddTodo.module.scss"
-
+import styles from "./styles/AddTodo.module.scss";
 
 export default function AddTodo() {
   const [todoName, setTodoName] = useState("");
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const addTodoMutation = useMutation({
     mutationFn: async () => {
       const res = await fetch("http://localhost:3000/api/todos", {
         method: "POST",
         credentials: "include",
-        headers: {"Content-type": "application/json"},
+        headers: { "Content-type": "application/json" },
         body: JSON.stringify({
           name: todoName,
         }),
@@ -23,8 +22,9 @@ export default function AddTodo() {
       return result;
     },
     onSuccess: () => {
-     queryClient.invalidateQueries({queryKey: ["todosList"]}) 
-    }
+      setTodoName("");
+      queryClient.invalidateQueries({ queryKey: ["todosList"] });
+    },
   });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -39,7 +39,12 @@ export default function AddTodo() {
           addTodoMutation.mutate();
         }}
       >
-        <input name="add todo" type="text" onChange={handleChange} />
+        <input
+          name="add todo"
+          type="text"
+          value={todoName}
+          onChange={handleChange}
+        />
         <button>Add</button>
       </form>
     </div>
