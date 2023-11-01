@@ -1,0 +1,29 @@
+@use "../../styles/variables" as v;
+.container {
+
+  form {
+    display: flex;
+    input {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      flex-grow: 1;
+      border-bottom: 1px solid gray;
+      color: white;
+      padding: 0.2rem;
+      font-size: 1.2rem;
+      margin-right: 1.2rem;
+    }
+
+    button {
+      background-color: v.$primary-300;
+      border: none;
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 0.4rem 1rem;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

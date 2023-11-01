@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import styles from "./styles/AddTodo.module.scss"
+
 
 export default function AddTodo() {
   const [todoName, setTodoName] = useState("");
@@ -30,7 +32,7 @@ export default function AddTodo() {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
