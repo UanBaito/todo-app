@@ -9,7 +9,7 @@ export class TodosModel {
   }
 
   async listTodoByCid(cid: string) {
-    const todos = await db<Todo>("todos").select().where("cid", cid);
+    const todos = await db<Todo>("todos").select().where("cid", cid).orderBy("created_at", "desc");
     return todos;
   }
 
