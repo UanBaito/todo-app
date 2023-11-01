@@ -13,9 +13,9 @@ export default function Dashboard() {
   }
   return (
     <div>
+      <h1>TO-DO</h1>
       <AddTodo/>
       <TodoList />
-      {queryState.data.name}
     </div>
   );
 }
