@@ -31,7 +31,7 @@ export default function TodoList() {
 
 export function TodoItem({ todo }: { todo: any }) {
   // const [isEditing, setIsEditing] = useState(false);
-  const [todoName, setTodoName] = useState(todo.name);
+  // const [todoName, setTodoName] = useState(todo.name);
   const [isCompleted, setIsCompleted] = useState<boolean>(todo.isCompleted);
   const queryClient = useQueryClient();
 
@@ -83,6 +83,23 @@ export function TodoItem({ todo }: { todo: any }) {
     },
   });
 
+  const deleteTodoMutation = useMutation({
+    mutationFn: async () => {
+      const res = await fetch(`http://localhost:3000/api/todos/${todo.id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      if (!res.ok) {
+        throw new Error();
+      }
+      const result = await res.json();
+      return result;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ["todosList"]})
+    }
+  });
+
   return (
     <>
       <li>
@@ -99,6 +116,12 @@ export function TodoItem({ todo }: { todo: any }) {
         <h2>
           {todo.name}
         </h2>
+        <button
+          onClick={() => {
+            deleteTodoMutation.mutate();
+          }}
+        >
+        </button>
       </li>
     </>
   );
