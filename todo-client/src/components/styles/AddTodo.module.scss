@@ -5,6 +5,25 @@
   margin-bottom: 1rem;
   border-bottom: 1px gray solid;
 
+  .message {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 0, 0.4);
+    background-color: rgba(255, 255, 0, 0.1);
+    padding: 0.2rem;
+    margin: 0;
+    margin-bottom: 0.4rem;
+    visibility: hidden;
+    height: 0;
+    transition: height ease 0.2s;
+    overflow: hidden;
+    line-height: 1.4rem;
+    &[data-vissible="true"] {
+      visibility: visible;
+      height: 1.4rem;
+    }
+  }
+
+
   form {
     display: flex;
     justify-content: space-between;

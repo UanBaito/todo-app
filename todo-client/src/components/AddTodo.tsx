@@ -7,13 +7,14 @@ export default function AddTodo() {
   const [todoName, setTodoName] = useState("");
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const messageRef = useRef<HTMLSpanElement>(null);
+  const messageRef = useRef<HTMLParagraphElement>(null);
   const addTodoMutation = useMutation({
     mutationFn: async () => {
       if (todoName === "") {
         //Select children to target <strong/> element, otherwise assigning the text content to the span element
         //directly would override it.
         messageRef.current!.children[0].textContent = "TO-DO cannot be empty";
+        messageRef.current!.setAttribute("data-vissible", "true");
         throw new Error();
       }
       const res = await fetch("http://localhost:3000/api/todos", {
@@ -44,9 +45,9 @@ export default function AddTodo() {
 
   return (
     <div className={styles.container}>
-      <span ref={messageRef} className={styles.message}>
+      <p ref={messageRef} data-vissible={false} className={styles.message}>
         <strong></strong>
-      </span>
+      </p>
       <form
         onSubmit={(e) => {
           e.preventDefault();
