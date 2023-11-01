@@ -1,14 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import styles from "./styles/AddTodo.module.scss";
+import { useNavigate } from "react-router-dom";
 
 export default function AddTodo() {
   const [todoName, setTodoName] = useState("");
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const addTodoMutation = useMutation({
     mutationFn: async () => {
-      if(todoName === "") {
-        throw new Error()
+      if (todoName === "") {
+        throw new Error();
       }
       const res = await fetch("http://localhost:3000/api/todos", {
         method: "POST",
@@ -18,7 +20,9 @@ export default function AddTodo() {
           name: todoName,
         }),
       });
-      if (!res.ok) {
+      if (res.status === 401) {
+        navigate("/login");
+      } else if (!res.ok) {
         throw new Error();
       }
       const result = await res.json();

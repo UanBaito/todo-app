@@ -2,15 +2,19 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import styles from "./styles/TodoList.module.scss";
 import { FaXmark } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 export default function TodoList() {
+  const navigate = useNavigate();
   const todoListQuery = useQuery({
     queryKey: ["todosList"],
     queryFn: async () => {
       const res = await fetch("http://localhost:3000/api/todos", {
         credentials: "include",
       });
-      if (!res.ok) {
+      if (res.status === 401) {
+        navigate("/login");
+      } else if (!res.ok) {
         throw new Error();
       }
       const result = await res.json();
@@ -32,6 +36,7 @@ export default function TodoList() {
 export function TodoItem({ todo }: { todo: any }) {
   // const [isEditing, setIsEditing] = useState(false);
   // const [todoName, setTodoName] = useState(todo.name);
+  const navigate = useNavigate();
   const [isCompleted, setIsCompleted] = useState<boolean>(todo.isCompleted);
   const queryClient = useQueryClient();
 
@@ -72,7 +77,9 @@ export function TodoItem({ todo }: { todo: any }) {
           isCompleted: isCompleted,
         }),
       });
-      if (!res.ok) {
+      if (res.status === 401) {
+        navigate("/login");
+      } else if (!res.ok) {
         throw new Error();
       }
       const result = await res.json();
@@ -89,7 +96,9 @@ export function TodoItem({ todo }: { todo: any }) {
         method: "DELETE",
         credentials: "include",
       });
-      if (!res.ok) {
+      if (res.status === 401) {
+        navigate("/login");
+      } else if (!res.ok) {
         throw new Error();
       }
       const result = await res.json();
