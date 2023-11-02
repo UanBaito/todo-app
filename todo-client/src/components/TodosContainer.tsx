@@ -2,8 +2,11 @@ import { useNavigate } from "react-router-dom";
 import AddTodo from "./AddTodo";
 import TodoList from "./TodoList";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import RemoveCompletedTodos from "./RemoveCompletedTodos";
 
 export default function TodosContainer() {
+  const [existsCompleted, setExistsCompleted] = useState(false);
   const navigate = useNavigate();
   const todoListQuery = useQuery({
     queryKey: ["todosList"],
@@ -17,6 +20,11 @@ export default function TodosContainer() {
         throw new Error();
       }
       const result = await res.json();
+      if (checkSomeCompleted(result)) {
+        setExistsCompleted(true);
+      } else {
+        setExistsCompleted(false);
+      }
       return result;
     },
   });
@@ -24,6 +32,7 @@ export default function TodosContainer() {
   return (
     <section>
       <AddTodo />
+      <RemoveCompletedTodos existsCompleted={existsCompleted} />
       {todoListQuery.isLoading
         ? null
         : todoListQuery.isError
@@ -31,4 +40,9 @@ export default function TodosContainer() {
         : <TodoList todosList={todoListQuery.data} />}
     </section>
   );
+}
+
+function checkSomeCompleted(todos: any[]) {
+  const existsCompleted = todos.some((todo) => todo.isCompleted);
+  return existsCompleted;
 }
