@@ -1,6 +1,7 @@
 import { ErrorRequestHandler, RequestHandler } from "express";
 import {
   AuthFailContextDoesntMatchRequest,
+  AuthFailExpiredToken,
   AuthFailNoToken,
   AuthFailTokenWrongFormat,
   EmptyForm,
@@ -10,7 +11,7 @@ import {
   UserDeleteFailIdNotFound,
 } from "./utils/error.ts";
 import { Ctx } from "./utils/interfaces.ts";
-import jwt from "jsonwebtoken";
+import jwt, { TokenExpiredError } from "jsonwebtoken";
 
 export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
   console.log(
@@ -77,6 +78,9 @@ export const checkToken: RequestHandler = (req, res, next) => {
     (res.locals as Ctx).userInfo = tokenInfo.user;
     next();
   } catch (err) {
+    if (err instanceof TokenExpiredError) {
+      next(new AuthFailExpiredToken(null));
+    }
     next(err);
   }
 };
