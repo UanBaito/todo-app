@@ -35,6 +35,7 @@ export default function AddTodo() {
     },
     onSuccess: () => {
       setTodoName("");
+      messageRef.current?.setAttribute("data-vissible", "false")
       queryClient.invalidateQueries({ queryKey: ["todosList"] });
     },
   });
