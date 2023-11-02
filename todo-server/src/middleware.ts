@@ -11,7 +11,7 @@ import {
   UserDeleteFailIdNotFound,
 } from "./utils/error.ts";
 import { Ctx } from "./utils/interfaces.ts";
-import jwt, { TokenExpiredError } from "jsonwebtoken";
+import jwt  from "jsonwebtoken";
 
 export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
   console.log(
@@ -78,7 +78,9 @@ export const checkToken: RequestHandler = (req, res, next) => {
     (res.locals as Ctx).userInfo = tokenInfo.user;
     next();
   } catch (err) {
-    if (err instanceof TokenExpiredError) {
+    //replacing this jwt error with a custom one makes it more easier to 
+    //customize the logging and server response
+    if (err instanceof jwt.TokenExpiredError) {
       next(new AuthFailExpiredToken(null));
     }
     next(err);
