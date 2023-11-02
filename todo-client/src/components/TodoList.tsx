@@ -1,33 +1,11 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import styles from "./styles/TodoList.module.scss";
 import { FaXmark } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
-export default function TodoList() {
-  const navigate = useNavigate();
-  const todoListQuery = useQuery({
-    queryKey: ["todosList"],
-    queryFn: async () => {
-      const res = await fetch("http://localhost:3000/api/todos", {
-        credentials: "include",
-      });
-      if (res.status === 401) {
-        navigate("/login");
-      } else if (!res.ok) {
-        throw new Error();
-      }
-      const result = await res.json();
-      return result;
-    },
-  });
-  if (todoListQuery.isLoading) {
-    return <div>Loading</div>;
-  }
-  if (todoListQuery.isError) {
-    return <div>error</div>;
-  }
-  const mappedTodos = todoListQuery.data.map((todo: any) => {
+export default function TodoList({ todosList }: { todosList: any[] }) {
+  const mappedTodos = todosList.map((todo: any) => {
     return <TodoItem todo={todo} key={todo.id} />;
   });
   return <ul className={styles.list}>{mappedTodos}</ul>;

@@ -1,5 +1,4 @@
-import AddTodo from "./components/AddTodo";
-import TodoList from "./components/TodoList";
+import TodosContainer from "./components/TodosContainer";
 import getUserData from "./hooks/getUserData";
 
 export default function Dashboard() {
@@ -14,8 +13,7 @@ export default function Dashboard() {
   return (
     <div>
       <h1>TO-DO</h1>
-      <AddTodo/>
-      <TodoList />
+      <TodosContainer />
     </div>
   );
 }

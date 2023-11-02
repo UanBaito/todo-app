@@ -24,14 +24,11 @@ export default function TodosContainer() {
   return (
     <section>
       <AddTodo />
-
       {todoListQuery.isLoading
         ? null
         : todoListQuery.isError
         ? null
-        : <TodoList />}
-
-
+        : <TodoList todosList={todoListQuery.data} />}
     </section>
   );
 }
