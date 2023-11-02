@@ -70,6 +70,7 @@ export const checkToken: RequestHandler = (req, res, next) => {
     }
     const tokenInfo = jwt.verify(authToken, process.env.JWT_SECRET!);
     if (typeof tokenInfo === "string") {
+      //FIXME: figure out what error to throw in these two scenarios
       throw new Error();
     }
     if (!("user" in tokenInfo)) {
