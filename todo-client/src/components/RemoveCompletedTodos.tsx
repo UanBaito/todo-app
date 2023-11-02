@@ -1,9 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import styles from "./styles/RemoveCompletedTodos.module.scss";
 
 export default function RemoveCompletedTodos(
   { existsCompleted }: { existsCompleted: boolean },
 ) {
+  const queryClient = useQueryClient();
   const removeCompletedTodosMutation = useMutation({
     mutationFn: async () => {
       const res = await fetch("http://localhost:3000/api/todos", {
@@ -13,8 +14,10 @@ export default function RemoveCompletedTodos(
       if (!res.ok) {
         throw new Error();
       }
-      const result = await res.json();
-      return result;
+      return "ok";
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["todosList"] });
     },
   });
 
