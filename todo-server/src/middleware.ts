@@ -32,7 +32,7 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
     );
   } else if (
     err instanceof LoginFail || err instanceof AuthFailTokenWrongFormat ||
-    err instanceof AuthFailNoToken
+    err instanceof AuthFailNoToken || err instanceof AuthFailExpiredToken
   ) {
     res.status(401).send({
       "error": err.clientError,
