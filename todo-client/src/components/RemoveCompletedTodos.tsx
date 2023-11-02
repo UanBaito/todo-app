@@ -26,6 +26,7 @@ export default function RemoveCompletedTodos(
       disabled={!existsCompleted}
       className={styles.button}
     >
+      Remove completed todos
     </button>
   );
 }
