@@ -9,7 +9,10 @@ export class TodosModel {
   }
 
   async listTodoByCid(cid: string) {
-    const todos = await db<Todo>("todos").select().where("cid", cid).orderBy("created_at", "desc");
+    const todos = await db<Todo>("todos").select().where("cid", cid).orderBy(
+      "created_at",
+      "desc",
+    );
     return todos;
   }
 
@@ -19,7 +22,7 @@ export class TodosModel {
       //TODO: make new todogetfailidnotfound error
       throw new Error();
     }
-    return todo
+    return todo;
   }
 
   async deleteTodo(id: number) {
@@ -31,12 +34,22 @@ export class TodosModel {
     }
     return todo[0];
   }
-  async updateTodo(id:number, name: string, isCompleted: boolean) {
-    const todo = await db<Todo>("todos").where("id", id).update({name, isCompleted}).returning("*")
-    if(todo.length === 0) {
+
+  async deleteCompletedTodosByCid(cid: string) {
+    const deletedRows = await db<Todo>("todos").delete().where("cid", cid)
+      .andWhere("isCompleted", true);
+    return deletedRows;
+  }
+
+  async updateTodo(id: number, name: string, isCompleted: boolean) {
+    const todo = await db<Todo>("todos").where("id", id).update({
+      name,
+      isCompleted,
+    }).returning("*");
+    if (todo.length === 0) {
       //TODO: make new todoupdateidnotfound error
-      throw new Error()
-    } 
-    return todo[0]
+      throw new Error();
+    }
+    return todo[0];
   }
 }
