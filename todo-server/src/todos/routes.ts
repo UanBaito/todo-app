@@ -65,6 +65,21 @@ todosRouter.delete("/:id", async (req, res, next) => {
   }
 });
 
+todosRouter.delete("/", async (_req, res, next) => {
+  console.log(`->> HANDLER - delete_completed_todos`);
+  const { userInfo } = res.locals as Ctx;
+  try {
+    if (!userInfo) {
+      throw new AuthFailNoContext(null);
+    }
+    await todosModel.deleteCompletedTodosByCid(userInfo.id);
+
+    res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+});
+
 todosRouter.put("/", async (req, res, next) => {
   console.log(`->> HANDLER - update_todo`);
   const updateInfo: TodoForUpdate = req.body;
