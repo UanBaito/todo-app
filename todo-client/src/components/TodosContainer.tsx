@@ -31,8 +31,8 @@ export default function TodosContainer() {
 
   return (
     <section>
-      <AddTodo />
       <RemoveCompletedTodos existsCompleted={existsCompleted} />
+      <AddTodo />
       {todoListQuery.isLoading
         ? null
         : todoListQuery.isError

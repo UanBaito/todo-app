@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({
-    name: "",
-    pwd: "",
+    username: "",
+    password: "",
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const loginMutation = useMutation({
     mutationFn: async () => {
@@ -19,8 +19,8 @@ export default function Login() {
         },
         credentials: "include",
         body: JSON.stringify({
-          name: credentials.name,
-          pwd: credentials.pwd,
+          name: credentials.username,
+          pwd: credentials.password,
         }),
       });
       if (!res.ok) {
@@ -30,8 +30,8 @@ export default function Login() {
       return result;
     },
     onSuccess: () => {
-      navigate("/dashboard")
-    }
+      navigate("/dashboard");
+    },
   });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -42,30 +42,39 @@ export default function Login() {
   }
 
   return (
-    <div className={styles.container}>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          loginMutation.mutate();
-        }}
-        className={styles.form}
-      >
-        <input
-          name="name"
-          type="text"
-          placeholder="  Username"
-          value={credentials.name}
-          onChange={handleChange}
-        />
-        <input
-          name="pwd"
-          type="password"
-          placeholder="  Password"
-          value={credentials.pwd}
-          onChange={handleChange}
-        />
-        <button>Sign in</button>
-      </form>
-    </div>
+    <main>
+      <div className={styles.container}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            loginMutation.mutate();
+          }}
+          className={styles.form}
+        >
+          <section>
+            <label htmlFor="username">Username</label>
+            <input
+              id="username"
+              name="username"
+              value={credentials.username}
+              autoComplete="username"
+              onChange={handleChange}
+            />
+          </section>
+          <section>
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              value={credentials.password}
+              onChange={handleChange}
+            />
+          </section>
+          <button>Sign in</button>
+        </form>
+      </div>
+    </main>
   );
 }
