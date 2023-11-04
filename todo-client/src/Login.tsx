@@ -91,7 +91,9 @@ export default function Login() {
               />
             </section>
             <button>Sign in</button>
+            <a href="/register">Don't have and account? Sign up.</a>
           </fieldset>
+          
         </form>
       </div>
     </main>
