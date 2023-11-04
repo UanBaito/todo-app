@@ -95,15 +95,31 @@ loginRouter.post("/register", async (req, res, next) => {
     if (!newUserInfo.name || !newUserInfo.pwd) {
       throw new EmptyForm(null);
     }
-    if(newUserInfo.pwd.length < 8) {
+    if (newUserInfo.pwd.length < 8) {
       //FIXME: create new error for this
-      throw new EmptyForm(newUserInfo.pwd)
+      throw new EmptyForm(newUserInfo.pwd);
     }
     const existsUsername = await userModel.findUserByName(newUserInfo.name);
     if (!!existsUsername) {
       throw new RegisterFailOccupiedUsername(null);
     }
     const user = await userModel.createUser(newUserInfo);
+
+    const token = jwt.sign({
+      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
+      user,
+    }, process.env.JWT_SECRET!);
+
+    const serializedToken = serialize("authToken", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      path: "/",
+    });
+
+    res.setHeader("Set-Cookie", serializedToken);
+
     res.status(201).send(user);
   } catch (err) {
     next(err);
