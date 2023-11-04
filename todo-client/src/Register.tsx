@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRef, useState } from "react";
-import styles from './styles/Register.module.scss'
+import styles from "./styles/Register.module.scss";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [credentials, setCredentials] = useState({
@@ -8,6 +9,7 @@ export default function Register() {
     newPassword: "",
   });
   const messageRef = useRef<HTMLParagraphElement>(null);
+  const navigate = useNavigate();
 
   const registerMutation = useMutation({
     mutationFn: async () => {
@@ -31,8 +33,11 @@ export default function Register() {
         messageRef.current!.children[0].textContent = "Something went wrong";
         throw new Error();
       }
-      const result = res.json();
-      return result;
+      const user = res.json();
+      return user;
+    },
+    onSuccess: () => {
+      navigate("/dashboard");
     },
   });
 
