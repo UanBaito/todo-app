@@ -43,14 +43,17 @@ main {
             font-size: 1.1rem;
           }
           input {
-            @include m.text-input
+            @include m.text-input;
           }
         }
 
         button {
           width: 100%;
           margin: 0.3rem 0;
-          @include m.square-button
+          @include m.square-button;
+        }
+        a {
+          margin-top: 0.6rem;
         }
       }
     }

@@ -40,6 +40,9 @@
         width: 100%;
         @include m.square-button;
       }
+      a{
+        margin-top: 0.6rem;
+      }
     }
   }
 }
