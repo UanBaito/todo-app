@@ -90,6 +90,7 @@ export default function Register() {
           <button>
             Register
           </button>
+          <a href="/login">Already have an account? Sign in</a>
         </fieldset>
       </form>
     </main>
