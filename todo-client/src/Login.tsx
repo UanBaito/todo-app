@@ -90,8 +90,8 @@ export default function Login() {
                 onChange={handleChange}
               />
             </section>
-            <button>Sign in</button>
-            <a href="/register">Don't have and account? Sign up.</a>
+            <button>Log in</button>
+            <a href="/register">Don't have and account? Register</a>
           </fieldset>
           
         </form>
