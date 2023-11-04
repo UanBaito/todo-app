@@ -50,6 +50,7 @@ export default function Register() {
 
   return (
     <main className={styles.main}>
+      <h1>Create a new account</h1>
       <form
         onSubmit={(e) => {
           e.preventDefault();
