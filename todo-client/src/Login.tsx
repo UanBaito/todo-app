@@ -11,7 +11,7 @@ export default function Login() {
   const navigate = useNavigate();
   const messageRef = useRef<HTMLParagraphElement>(null);
 
- const loginMutation = useMutation({
+  const loginMutation = useMutation({
     mutationFn: async () => {
       const res = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
@@ -52,50 +52,46 @@ export default function Login() {
     }));
   }
 
-
   return (
-    <main>
-      <div className={styles.container}>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            loginMutation.mutate();
-          }}
-          className={styles.form}
-        >
-          <p ref={messageRef} className={styles.message} data-visible={false}>
-            <strong></strong>
-          </p>
-          <fieldset disabled={loginMutation.isPending}>
-            <section>
-              <label htmlFor="username">Username</label>
-              <input
-                required
-                id="username"
-                name="username"
-                value={credentials.username}
-                autoComplete="username"
-                onChange={handleChange}
-              />
-            </section>
-            <section>
-              <label htmlFor="password">Password</label>
-              <input
-                required
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                value={credentials.password}
-                onChange={handleChange}
-              />
-            </section>
-            <button>Log in</button>
-            <a href="/register">Don't have and account? Register</a>
-          </fieldset>
-          
-        </form>
-      </div>
+    <main className={styles.main}>
+      <h1>Log in to your account</h1>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          loginMutation.mutate();
+        }}
+      >
+        <p ref={messageRef} className={styles.message} data-visible={false}>
+          <strong></strong>
+        </p>
+        <fieldset disabled={loginMutation.isPending}>
+          <section>
+            <label htmlFor="username">Username</label>
+            <input
+              required
+              id="username"
+              name="username"
+              value={credentials.username}
+              autoComplete="username"
+              onChange={handleChange}
+            />
+          </section>
+          <section>
+            <label htmlFor="password">Password</label>
+            <input
+              required
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              value={credentials.password}
+              onChange={handleChange}
+            />
+          </section>
+          <button>Log in</button>
+          <a href="/register">Don't have and account? Register</a>
+        </fieldset>
+      </form>
     </main>
   );
 }
