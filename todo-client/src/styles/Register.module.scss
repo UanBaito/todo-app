@@ -1,0 +1,45 @@
+@use "./mixins" as m;
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .form {
+    width: 100%;
+    position: relative;
+    p {
+      position: absolute;
+      bottom: 100%;
+      right: 50%;
+      transform: translate(50%);
+      width: 100%;
+      @include m.message;
+    }
+
+    fieldset {
+      padding: 0;
+      margin: 0;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      section {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 0.8rem;
+        label,
+        span {
+          font-size: 1.1rem;
+        }
+        input {
+          @include m.text-input;
+        }
+      }
+      button {
+        width: 100%;
+        @include m.square-button;
+      }
+    }
+  }
+}
