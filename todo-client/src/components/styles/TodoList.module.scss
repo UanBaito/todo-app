@@ -62,10 +62,16 @@
       &:hover {
         cursor: pointer;
       }
+      & + h2 {
+        transition: opacity 0.3s ease;
+      }
     }
-
     .completed_checkbox[type="checkbox"]:checked {
       border: 3px solid v.$background-300;
+      & + h2 {
+        opacity: 0.5;
+        text-decoration: line-through;
+      }
     }
   }
 }
