@@ -1,10 +1,10 @@
 @use "./mixins" as m;
-main {
+.main {
   display: flex;
   justify-content: center;
   align-items: center;
 
-  .form {
+  form {
     width: 100%;
     position: relative;
     p {

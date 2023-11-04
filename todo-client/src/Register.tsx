@@ -49,13 +49,12 @@ export default function Register() {
   }
 
   return (
-    <main>
+    <main className={styles.main}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
           registerMutation.mutate();
         }}
-        className={styles.form}
       >
         <p ref={messageRef} data-visible={false}>
           <strong></strong>
