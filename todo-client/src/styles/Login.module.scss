@@ -20,7 +20,7 @@ main {
       width: 100%;
       .message {
         @include m.message;
-        width: 95%;
+        width: 100%;
         position: absolute;
         bottom: 100%;
         right: 50%;
@@ -35,9 +35,9 @@ main {
         flex-direction: column;
         align-items: center;
         section {
+          width: 100%;
           display: flex;
           flex-direction: column;
-          width: 95%;
           margin-bottom: 0.8rem;
           label {
             font-size: 1.1rem;
@@ -48,7 +48,7 @@ main {
         }
 
         button {
-          width: 95%;
+          width: 100%;
           margin: 0.3rem 0;
           @include m.square-button
         }
