@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRef, useState } from "react";
+import styles from './styles/Register.module.scss'
 
 export default function Register() {
   const [credentials, setCredentials] = useState({
@@ -49,6 +50,7 @@ export default function Register() {
           e.preventDefault();
           registerMutation.mutate();
         }}
+        className={styles.form}
       >
         <p ref={messageRef} data-visible={false}>
           <strong></strong>
