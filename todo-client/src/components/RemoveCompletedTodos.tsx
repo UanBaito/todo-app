@@ -22,14 +22,18 @@ export default function RemoveCompletedTodos(
   });
 
   return (
+  <div>
+
     <button
       onClick={() => {
         removeCompletedTodosMutation.mutate();
       }}
       disabled={!existsCompleted}
+      aria-hidden={!existsCompleted}
       className={styles.button}
     >
       Remove completed todos
     </button>
+    </div>
   );
 }

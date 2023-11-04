@@ -8,7 +8,11 @@ export default function TodoList({ todosList }: { todosList: any[] }) {
   const mappedTodos = todosList.map((todo: any) => {
     return <TodoItem todo={todo} key={todo.id} />;
   });
-  return <ul className={styles.list}>{mappedTodos}</ul>;
+  return (
+    <section aria-label="Todos list">
+      <ul className={styles.list}>{mappedTodos}</ul>
+    </section>
+  )
 }
 
 export function TodoItem({ todo }: { todo: any }) {

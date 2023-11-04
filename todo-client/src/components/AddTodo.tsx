@@ -35,7 +35,7 @@ export default function AddTodo() {
     },
     onSuccess: () => {
       setTodoName("");
-      messageRef.current?.setAttribute("data-vissible", "false")
+      messageRef.current?.setAttribute("data-vissible", "false");
       queryClient.invalidateQueries({ queryKey: ["todosList"] });
     },
   });
@@ -45,24 +45,26 @@ export default function AddTodo() {
   }
 
   return (
-    <div className={styles.container}>
-      <p ref={messageRef} data-vissible={false} className={styles.message}>
-        <strong></strong>
-      </p>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          addTodoMutation.mutate();
-        }}
-      >
-        <input
-          name="add todo"
-          type="text"
-          value={todoName}
-          onChange={handleChange}
-        />
-        <button>Add</button>
-      </form>
-    </div>
+    <section aria-labelledby="add">
+      <div className={styles.container}>
+        <p ref={messageRef} data-vissible={false} className={styles.message}>
+          <strong></strong>
+        </p>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            addTodoMutation.mutate();
+          }}
+        >
+          <input
+            name="add todo"
+            type="text"
+            value={todoName}
+            onChange={handleChange}
+          />
+          <button id="add">Add</button>
+        </form>
+      </div>
+    </section>
   );
 }

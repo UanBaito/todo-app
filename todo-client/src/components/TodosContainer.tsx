@@ -30,7 +30,7 @@ export default function TodosContainer() {
   });
 
   return (
-    <section>
+    <>
       <RemoveCompletedTodos existsCompleted={existsCompleted} />
       <AddTodo />
       {todoListQuery.isLoading
@@ -38,7 +38,7 @@ export default function TodosContainer() {
         : todoListQuery.isError
         ? null
         : <TodoList todosList={todoListQuery.data} />}
-    </section>
+    </>
   );
 }
 

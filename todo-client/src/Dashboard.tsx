@@ -1,5 +1,6 @@
 import TodosContainer from "./components/TodosContainer";
 import getUserData from "./hooks/getUserData";
+import styles from "./styles/Dashboard.module.scss"
 
 export default function Dashboard() {
   const queryState = getUserData();
@@ -11,9 +12,11 @@ export default function Dashboard() {
     return <div>error</div>;
   }
   return (
-    <div>
-      <h1>TO-DO</h1>
-      <TodosContainer />
-    </div>
+    <main>
+      <article className={styles.container}>
+        <h1>TO-DO</h1>
+        <TodosContainer />
+      </article>
+    </main>
   );
 }
