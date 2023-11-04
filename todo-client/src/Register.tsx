@@ -1,11 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function Register() {
   const [credentials, setCredentials] = useState({
     username: "",
     newPassword: "",
   });
+  const messageRef = useRef<HTMLParagraphElement>(null);
 
   const registerMutation = useMutation({
     mutationFn: async () => {
@@ -18,7 +19,15 @@ export default function Register() {
           pwd: credentials.newPassword,
         }),
       });
-      if (!res.ok) {
+
+      if (res.status === 409) {
+        messageRef.current!.setAttribute("data-visible", "true");
+        messageRef.current!.children[0].textContent =
+          "This username is already occupied. Please try with another username";
+        throw new Error();
+      } else if (!res.ok) {
+        messageRef.current!.setAttribute("data-visible", "true");
+        messageRef.current!.children[0].textContent = "Something went wrong";
         throw new Error();
       }
       const result = res.json();
@@ -41,9 +50,12 @@ export default function Register() {
           registerMutation.mutate();
         }}
       >
-        <fieldset>
-          <section>
-            <label htmlFor="username">Username</label>
+        <p ref={messageRef} data-visible={false}>
+          <strong></strong>
+        </p>
+        <fieldset disabled={registerMutation.isPending}>
+          <section aria-describedby="username-label">
+            <label id="username-label" htmlFor="username">Username</label>
             <input
               id="username"
               name="username"
@@ -54,8 +66,8 @@ export default function Register() {
             />
           </section>
 
-          <section>
-            <label htmlFor="newPassword">Password</label>
+          <section aria-describedby="password-label">
+            <label id="password-label" htmlFor="newPassword">Password</label>
             <input
               type="password"
               name="newPassword"
