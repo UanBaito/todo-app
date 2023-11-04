@@ -95,6 +95,10 @@ loginRouter.post("/register", async (req, res, next) => {
     if (!newUserInfo.name || !newUserInfo.pwd) {
       throw new EmptyForm(null);
     }
+    if(newUserInfo.pwd.length < 8) {
+      //FIXME: create new error for this
+      throw new EmptyForm(newUserInfo.pwd)
+    }
     const existsUsername = await userModel.findUserByName(newUserInfo.name);
     if (!!existsUsername) {
       throw new RegisterFailOccupiedUsername(null);
