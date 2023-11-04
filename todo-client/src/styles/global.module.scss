@@ -11,6 +11,11 @@ body > div {
   background-color: v.$background-300;
   color: white;
   max-width: 100vw;
+  margin: 0;
+}
+
+body > div {
+  padding: 0.6rem;
 }
 
 /* Change autocomplete styles in WebKit */
@@ -20,4 +25,21 @@ input:-webkit-autofill:focus {
   border: none;
   outline: none;
   -webkit-box-shadow: 0 0 0px 1000px v.$secondary-300 inset;
+}
+
+// Scrollbar
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: gray;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
