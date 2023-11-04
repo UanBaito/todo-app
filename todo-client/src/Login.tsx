@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styles from "./styles/Login.module.scss";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +9,7 @@ export default function Login() {
     password: "",
   });
   const navigate = useNavigate();
+  const messageRef = useRef<HTMLParagraphElement>(null);
 
   const loginMutation = useMutation({
     mutationFn: async () => {
@@ -23,11 +24,21 @@ export default function Login() {
           pwd: credentials.password,
         }),
       });
-      if (!res.ok) {
+      if (res.status === 401) {
+        messageRef.current!.children[0].textContent =
+          "Invalid username or password";
+        messageRef.current!.setAttribute("data-visible", "true");
+        throw new Error();
+      } else if (!res.ok) {
+        messageRef.current!.children[0].textContent = "Something went wrong";
+        messageRef.current!.setAttribute("data-visible", "true");
         throw new Error();
       }
       const result = await res.json();
       return result;
+    },
+    onMutate: () => {
+      messageRef.current!.setAttribute("data-visible", "false");
     },
     onSuccess: () => {
       navigate("/dashboard");
@@ -51,28 +62,35 @@ export default function Login() {
           }}
           className={styles.form}
         >
-          <section>
-            <label htmlFor="username">Username</label>
-            <input
-              id="username"
-              name="username"
-              value={credentials.username}
-              autoComplete="username"
-              onChange={handleChange}
-            />
-          </section>
-          <section>
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              value={credentials.password}
-              onChange={handleChange}
-            />
-          </section>
-          <button>Sign in</button>
+          <p ref={messageRef} className={styles.message} data-visible={false}>
+            <strong></strong>
+          </p>
+          <fieldset disabled={loginMutation.isPending}>
+            <section>
+              <label htmlFor="username">Username</label>
+              <input
+                required
+                id="username"
+                name="username"
+                value={credentials.username}
+                autoComplete="username"
+                onChange={handleChange}
+              />
+            </section>
+            <section>
+              <label htmlFor="password">Password</label>
+              <input
+                required
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                value={credentials.password}
+                onChange={handleChange}
+              />
+            </section>
+            <button>Sign in</button>
+          </fieldset>
         </form>
       </div>
     </main>
