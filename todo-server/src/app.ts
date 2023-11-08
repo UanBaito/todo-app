@@ -8,11 +8,11 @@ import { loginRouter } from "./auth/routes.js";
 import { userRouter } from "./users/routes.js";
 
 export const app = express();
-const port = 3000;
+const port = process.env.PORT ? process.env.PORT : 3000;
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: /http:\/\/localhost*/,
     methods: ["POST", "PUT", "DELETE"],
     credentials: true,
   }),
