@@ -1,8 +1,8 @@
 // import { User } from "knex/types/tables"
-import { User, UserForCreate } from "../utils/interfaces.ts";
-import db from "../db/db.ts";
+import { User, UserForCreate } from "../utils/interfaces.js";
+import db from "../db/db.js";
 import bcrypt from "bcrypt";
-import { UserDeleteFailIdNotFound } from "../utils/error.ts";
+import { UserDeleteFailIdNotFound } from "../utils/error.js";
 
 export class UserModel {
   async findUserByName(name: string) {

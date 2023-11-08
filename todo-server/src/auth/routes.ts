@@ -4,12 +4,12 @@ import {
   EmptyForm,
   LoginFail,
   RegisterFailOccupiedUsername,
-} from "../utils/error.ts";
+} from "../utils/error.js";
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
-import { UserModel } from "../users/model.ts";
+import { UserModel } from "../users/model.js";
 import bcrypt from "bcrypt";
-import { UserForCreate } from "../utils/interfaces.ts";
+import { UserForCreate } from "../utils/interfaces.js";
 
 export const loginRouter = express.Router();
 let userModel = new UserModel();

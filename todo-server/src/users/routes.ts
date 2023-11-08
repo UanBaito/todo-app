@@ -1,11 +1,11 @@
 import express from "express";
-import { UserModel } from "./model.ts";
+import { UserModel } from "./model.js";
 import {
   AuthFailContextDoesntMatchRequest,
   AuthFailNoContext,
   UserDeleteFailIdNotFound,
-} from "../utils/error.ts";
-import { Ctx } from "../utils/interfaces.ts";
+} from "../utils/error.js";
+import { Ctx } from "../utils/interfaces.js";
 import { serialize } from "cookie";
 
 export const userRouter = express.Router();

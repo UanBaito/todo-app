@@ -1,11 +1,11 @@
 import express from "express";
-import { TodosModel } from "./model.ts";
-import { Ctx, TodoForCreate, TodoForUpdate } from "../utils/interfaces.ts";
+import { TodosModel } from "./model.js";
+import { Ctx, TodoForCreate, TodoForUpdate } from "../utils/interfaces.js";
 import {
   AuthFailContextDoesntMatchRequest,
   AuthFailNoContext,
   EmptyForm,
-} from "../utils/error.ts";
+} from "../utils/error.js";
 
 const todosRouter = express.Router();
 const todosModel = new TodosModel();

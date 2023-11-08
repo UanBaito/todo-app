@@ -1,11 +1,11 @@
 import express from "express";
-import todosRouter from "./todos/routes.ts";
+import todosRouter from "./todos/routes.js";
 import cors from "cors";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import { checkToken, errorHandler, logger } from "./middleware.ts";
-import { loginRouter } from "./auth/routes.ts";
-import { userRouter } from "./users/routes.ts";
+import { checkToken, errorHandler, logger } from "./middleware.js";
+import { loginRouter } from "./auth/routes.js";
+import { userRouter } from "./users/routes.js";
 
 export const app = express();
 const port = 3000;
