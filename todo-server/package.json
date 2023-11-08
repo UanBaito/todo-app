@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "jest --watch",
-    "build": "build",
-    "start": "nodemon --esm --ignore ./tests/",
-    "request": "nodemon --esm ./tests/test.ts"
+    "build": "rm -rf dist/ && tsc",
+    "start": "node ./dist/app.js",
+    "dev": "nodemon --esm --ignore ./tests/"
   },
   "author": "",
   "license": "ISC",

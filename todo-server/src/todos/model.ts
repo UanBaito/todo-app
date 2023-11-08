@@ -1,6 +1,6 @@
-import { Todo } from "../utils/interfaces.ts";
-import db from "../db/db.ts";
-import { TodoDeleteFailIdNotFound } from "../utils/error.ts";
+import { Todo } from "../utils/interfaces.js";
+import db from "../db/db.js";
+import { TodoDeleteFailIdNotFound } from "../utils/error.js";
 
 export class TodosModel {
   async createTodo(name: string, cid: string) {

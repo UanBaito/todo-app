@@ -19,15 +19,13 @@
     ],
     "module": "es6",
     "skipLibCheck": true,
-    "outDir": "dist",
+    "outDir": "./dist",
     "esModuleInterop": true,
 
     /* Bundler mode */
     "moduleResolution": "node",
-    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
 
     /* Linting */
     "strict": true,

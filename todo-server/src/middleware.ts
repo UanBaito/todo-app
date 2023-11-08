@@ -9,8 +9,8 @@ import {
   RegisterFailOccupiedUsername,
   TodoDeleteFailIdNotFound,
   UserDeleteFailIdNotFound,
-} from "./utils/error.ts";
-import { Ctx } from "./utils/interfaces.ts";
+} from "./utils/error.js";
+import { Ctx } from "./utils/interfaces.js";
 import jwt  from "jsonwebtoken";
 
 export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
