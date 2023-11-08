@@ -7,8 +7,7 @@
   "scripts": {
     "test": "jest --watch",
     "build": "build",
-    "start": "nodemon --esm --ignore ./tests/",
-    "request": "nodemon --esm ./tests/test.ts"
+    "start": "nodemon --esm --ignore ./tests/"
   },
   "author": "",
   "license": "ISC",
