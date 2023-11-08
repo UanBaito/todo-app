@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "jest --watch",
-    "build": "build",
+    "build": "rm -rf dist/ && tsc",
     "start": "nodemon --esm --ignore ./tests/"
   },
   "author": "",
