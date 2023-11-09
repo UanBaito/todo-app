@@ -1,5 +1,6 @@
 {
   "ignore": ["*.test.ts", "request.test.ts"],
+  "exec": "tsx src/app.ts",
   "events": {
     "start": "reset"
   }
