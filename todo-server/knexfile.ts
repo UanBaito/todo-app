@@ -5,7 +5,7 @@ import type { Knex } from "knex";
 const config: { [key: string]: Knex.Config } = {
   development: {
     client: "pg",
-    connection: process.env.DB_URL,
+    connection: "postgresql://onebyte:bahamut23@localhost:5432/migration_test",
   },
 
   staging: {
