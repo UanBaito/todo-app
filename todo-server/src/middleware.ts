@@ -44,6 +44,7 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
   } else if (err instanceof RegisterFailOccupiedUsername) {
     res.status(409).send({ "error": err.clientError });
   } else {
+    console.log(err)
     res.status(500).send({
       "error": "SERVICE ERROR",
     });
