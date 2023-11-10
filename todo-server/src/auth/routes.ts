@@ -104,6 +104,7 @@ loginRouter.post("/register", async (req, res, next) => {
       throw new RegisterFailOccupiedUsername(null);
     }
     const user = await userModel.createUser(newUserInfo);
+    //FIXME: check if createduser is not undefined
 
     const token = jwt.sign({
       exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
