@@ -1,10 +1,10 @@
-FROM node:17-alpine AS base
+FROM node:20-alpine AS base
 USER node
 WORKDIR /app
 COPY --chown=node:node package*.json ./
 
 # Install production dependencies only
-FROM node:17-alpine AS deps
+FROM node:20-alpine AS deps
 USER node
 WORKDIR /app
 COPY --chown=node:node package*.json ./
@@ -20,12 +20,15 @@ COPY --chown=node:node src/ src/
 RUN npm run build
 
 # Combine production only node_modules with compiled javascript files.
-FROM node:17-alpine AS final
+FROM node:20-alpine AS final
 USER node
 WORKDIR /app
+COPY --chown=node:node /migrations ./migrations/
+COPY --chown=node:node /knexfile.ts ./
 COPY --chown=node:node --from=deps /app/node_modules ./node_modules
 COPY --chown=node:node --from=build /app/dist ./dist/
 COPY --chown=node:node --from=deps /app/package*.json ./
+RUN npm install tsx
 EXPOSE 3000
 CMD ["node", "/app/dist/app.js" ]
 
