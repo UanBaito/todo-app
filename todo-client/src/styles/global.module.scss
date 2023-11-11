@@ -13,9 +13,13 @@ body > div {
   overflow-x: hidden;
   background-color: v.$background-300;
   color: white;
-  max-width: 64rem;
+  max-width: 48rem;
   width: 100%;
   margin:  0 auto;
+}
+
+main {
+  width: 100%;
 }
 
 body > div {
