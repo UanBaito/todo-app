@@ -11,10 +11,11 @@ import Dashboard from "./Dashboard";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
 import Register from "./Register";
+import Home from "./Home";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route element={<div>Hello world</div>} path="/"></Route>
+      <Route element={<Home/>} path="/"></Route>
       <Route element={<Login />} path="/login" />
       <Route element={<Dashboard />} path="/dashboard" />
       <Route element={<Register />} path="/register" />
