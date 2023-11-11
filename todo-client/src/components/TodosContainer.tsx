@@ -4,6 +4,7 @@ import TodoList from "./TodoList";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import RemoveCompletedTodos from "./RemoveCompletedTodos";
+import { baseUrl } from "../lib/constants";
 
 export default function TodosContainer() {
   const [existsCompleted, setExistsCompleted] = useState(false);
@@ -11,7 +12,7 @@ export default function TodosContainer() {
   const todoListQuery = useQuery({
     queryKey: ["todosList"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:3000/api/todos", {
+      const res = await fetch(`${baseUrl}/api/todos`, {
         credentials: "include",
       });
       if (res.status === 401) {

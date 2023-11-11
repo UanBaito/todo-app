@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import styles from "./styles/Login.module.scss";
 import { useNavigate } from "react-router-dom";
+import { baseUrl } from "./lib/constants";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({
@@ -13,7 +14,7 @@ export default function Login() {
 
   const loginMutation = useMutation({
     mutationFn: async () => {
-      const res = await fetch("http://localhost:3000/api/auth/login", {
+      const res = await fetch(`${baseUrl}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",

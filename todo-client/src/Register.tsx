@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import styles from "./styles/Register.module.scss";
 import { useNavigate } from "react-router-dom";
+import { baseUrl } from "./lib/constants";
 
 export default function Register() {
   const [credentials, setCredentials] = useState({
@@ -13,7 +14,7 @@ export default function Register() {
 
   const registerMutation = useMutation({
     mutationFn: async () => {
-      const res = await fetch("http://localhost:3000/api/auth/register", {
+      const res = await fetch(`${baseUrl}/api/auth/register`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-type": "application/json" },

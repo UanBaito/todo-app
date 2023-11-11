@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import styles from "./styles/AddTodo.module.scss";
 import { useNavigate } from "react-router-dom";
+import { baseUrl } from "../lib/constants";
 
 export default function AddTodo() {
   const [todoName, setTodoName] = useState("");
@@ -17,7 +18,7 @@ export default function AddTodo() {
         messageRef.current!.setAttribute("data-vissible", "true");
         throw new Error();
       }
-      const res = await fetch("http://localhost:3000/api/todos", {
+      const res = await fetch(`${baseUrl}/api/todos`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-type": "application/json" },

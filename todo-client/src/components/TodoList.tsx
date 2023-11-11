@@ -3,6 +3,7 @@ import { useState } from "react";
 import styles from "./styles/TodoList.module.scss";
 import { FaXmark } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { baseUrl } from "../lib/constants";
 
 export default function TodoList({ todosList }: { todosList: any[] }) {
   const mappedTodos = todosList.map((todo: any) => {
@@ -16,40 +17,12 @@ export default function TodoList({ todosList }: { todosList: any[] }) {
 }
 
 export function TodoItem({ todo }: { todo: any }) {
-  // const [isEditing, setIsEditing] = useState(false);
-  // const [todoName, setTodoName] = useState(todo.name);
   const navigate = useNavigate();
   const [isCompleted, setIsCompleted] = useState<boolean>(todo.isCompleted);
   const queryClient = useQueryClient();
-
-  // const updateTodoMutation = useMutation({
-  //   mutationFn: async () => {
-  //     const res = await fetch("http://localhost:3000/api/todos", {
-  //       method: "PUT",
-  //       credentials: "include",
-  //       headers: { "Content-type": "application/json" },
-  //       body: JSON.stringify(
-  //         {
-  //           name: todoName,
-  //           id: todo.id,
-  //           isCompleted: todo.isCompleted,
-  //         },
-  //       ),
-  //     });
-  //     if (!res.ok) {
-  //       throw new Error();
-  //     }
-  //     const result = await res.json();
-  //     return result;
-  //   },
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ["todosList"] });
-  //   },
-  // });
-
   const toggleCompleteMutation = useMutation({
     mutationFn: async () => {
-      const res = await fetch("http://localhost:3000/api/todos", {
+      const res = await fetch(`${baseUrl}/api/todos`, {
         method: "PUT",
         credentials: "include",
         headers: { "Content-type": "application/json" },
@@ -74,7 +47,7 @@ export function TodoItem({ todo }: { todo: any }) {
 
   const deleteTodoMutation = useMutation({
     mutationFn: async () => {
-      const res = await fetch(`http://localhost:3000/api/todos/${todo.id}`, {
+      const res = await fetch(`${baseUrl}/api/todos/${todo.id}`, {
         method: "DELETE",
         credentials: "include",
       });
