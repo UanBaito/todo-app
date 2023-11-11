@@ -61,6 +61,7 @@ export default function AddTodo() {
             type="text"
             value={todoName}
             onChange={handleChange}
+            autoComplete="off"
           />
           <button id="add">Add</button>
         </form>
